@@ -6,7 +6,7 @@ import {
   getTag,
 } from '@/lib/reader'
 import HeroTitle from '@/components/HeroTitle'
-import HeroParallax from '@/components/HeroParallax'
+import HeroField from '@/components/HeroField'
 import Reveal from '@/components/Reveal'
 
 export default async function HomePage() {
@@ -20,66 +20,69 @@ export default async function HomePage() {
 
   return (
     <div className="space-y-28 sm:space-y-36">
-      <HeroParallax>
-        <section className="relative min-h-[58vh] lg:min-h-[68vh] flex flex-col justify-center pt-4 lg:pt-8">
-          <Reveal as="div" className="flex items-center gap-3 mb-8 sm:mb-10">
-            <span
-              className="h-2 w-2 rounded-full bg-[color:var(--color-accent)]"
-              aria-hidden
-            />
-            <span className="label-strong">Raina Lab</span>
-          </Reveal>
+      {/* HERO — massive wordmark with animated emerald field */}
+      <section className="relative -mx-5 sm:-mx-8 lg:-mx-12 px-5 sm:px-8 lg:px-12 min-h-[82vh] flex flex-col justify-center pt-4 lg:pt-6 isolate">
+        <HeroField />
+
+        <div className="relative z-10 max-w-[82rem] mx-auto w-full">
+          <HeroTitle
+            text="Raina Lab"
+            className="display-xl font-medium text-[clamp(5rem,22vw,20rem)] leading-[0.85] tracking-[-0.055em] text-balance"
+          />
 
           {home?.tagline && (
-            <HeroTitle
-              text={home.tagline}
-              className="display-xl text-[clamp(2.75rem,10vw,9.5rem)] text-balance max-w-[18ch]"
-            />
+            <Reveal delay={0.35} y={14}>
+              <p className="mt-8 sm:mt-10 text-2xl sm:text-3xl lg:text-[2.25rem] text-[color:var(--color-ink-2)] max-w-[40rem] leading-[1.25] tracking-[-0.015em] font-medium">
+                {home.tagline}
+              </p>
+            </Reveal>
           )}
 
           {home?.intro && (
-            <Reveal delay={0.3} y={12}>
-              <p className="text-xl sm:text-2xl lg:text-[1.65rem] text-[color:var(--color-ink-3)] mt-8 leading-[1.4] max-w-[44rem]">
+            <Reveal delay={0.5} y={12}>
+              <p className="mt-6 text-lg sm:text-xl text-[color:var(--color-ink-3)] leading-[1.5] max-w-[36rem]">
                 {home.intro}
               </p>
             </Reveal>
           )}
 
           {(featured.length > 0 || postsWithTags.length > 0) && (
-            <Reveal delay={0.5}>
-              <div className="mt-14">
+            <Reveal delay={0.65}>
+              <div className="mt-12 flex items-center gap-4">
                 <Link
                   href={featured.length > 0 ? '/research' : '/news'}
-                  className="group inline-flex items-center gap-3 text-sm font-medium text-[color:var(--color-ink)]"
+                  className="group inline-flex items-center gap-3 rounded-full border border-[color:var(--color-ink)] bg-[color:var(--color-ink)] text-[color:var(--color-canvas)] px-6 py-3 text-sm font-medium hover:bg-[color:var(--color-accent-dark)] hover:border-[color:var(--color-accent-dark)] transition-colors"
                 >
-                  <span className="relative link-reveal">
-                    {featured.length > 0
-                      ? 'Explore the research'
-                      : 'Latest news'}
-                  </span>
+                  {featured.length > 0
+                    ? 'Explore the research'
+                    : 'Latest news'}
                   <span
                     aria-hidden
-                    className="text-[color:var(--color-accent)] transition-transform duration-300 group-hover:translate-x-1"
+                    className="transition-transform duration-300 group-hover:translate-x-0.5"
                   >
                     →
                   </span>
                 </Link>
+                <Link
+                  href="/about"
+                  className="text-sm font-medium text-[color:var(--color-ink-2)] link-reveal relative"
+                >
+                  About the lab
+                </Link>
               </div>
             </Reveal>
           )}
-        </section>
-      </HeroParallax>
 
-      {home?.heroImage && (
-        <Reveal className="relative -mx-5 sm:-mx-8 lg:-mx-12 overflow-hidden">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={home.heroImage}
-            alt=""
-            className="w-full aspect-[21/9] object-cover"
-          />
-        </Reveal>
-      )}
+          {/* Tiny scroll cue */}
+          <div className="absolute bottom-6 right-6 hidden sm:flex items-center gap-2 label animate-pulse">
+            <span
+              className="h-1.5 w-1.5 rounded-full bg-[color:var(--color-accent)]"
+              aria-hidden
+            />
+            Scroll
+          </div>
+        </div>
+      </section>
 
       {featured.length > 0 && (
         <section>
@@ -123,6 +126,17 @@ export default async function HomePage() {
             ))}
           </div>
         </section>
+      )}
+
+      {home?.heroImage && (
+        <Reveal className="relative -mx-5 sm:-mx-8 lg:-mx-12 overflow-hidden">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={home.heroImage}
+            alt=""
+            className="w-full aspect-[21/9] object-cover"
+          />
+        </Reveal>
       )}
 
       {postsWithTags.length > 0 && (
