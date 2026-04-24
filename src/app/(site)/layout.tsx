@@ -95,21 +95,24 @@ export default function SiteLayout({
                   Raina Lab
                 </span>
               </div>
-              <div className="flex items-center gap-6 label">
+              <p className="label">
                 <span className="tabular">© {new Date().getFullYear()}</span>
-                <Link
-                  href="/contact"
-                  className="hover:text-[color:var(--color-ink)] transition-colors"
+                <span
+                  className="mx-2 text-[color:var(--color-ink-5)]"
+                  aria-hidden
                 >
-                  Contact
-                </Link>
-                <Link
-                  href="/admin"
-                  className="hover:text-[color:var(--color-ink)] transition-colors"
-                >
-                  Admin
-                </Link>
-              </div>
+                  ·
+                </span>
+                <span>
+                  Made by Isaac with{' '}
+                  <span
+                    className="text-[color:var(--color-accent)]"
+                    aria-label="love"
+                  >
+                    ♡
+                  </span>
+                </span>
+              </p>
             </div>
           </footer>
         </div>
