@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { getCurrentMembers, getRoleLabel } from '@/lib/reader'
 import Masthead from '@/components/Masthead'
+import Reveal from '@/components/Reveal'
 
 export const metadata = { title: 'People' }
 
@@ -26,8 +27,8 @@ export default async function PeoplePage() {
         </div>
       ) : (
         <ul className="grid gap-x-6 gap-y-14 sm:gap-x-8 sm:gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
-          {withRoles.map((m) => (
-            <li key={m.id}>
+          {withRoles.map((m, i) => (
+            <Reveal as="li" key={m.id} delay={i * 0.06}>
               <Link href={`/people/${m.slug}`} className="group block">
                 <div className="relative aspect-[3/4] overflow-hidden bg-[color:var(--color-surface)] border border-[color:var(--color-line)] mb-5">
                   {m.photo ? (
@@ -60,7 +61,7 @@ export default async function PeoplePage() {
                   </p>
                 )}
               </Link>
-            </li>
+            </Reveal>
           ))}
         </ul>
       )}

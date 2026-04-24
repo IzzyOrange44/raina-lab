@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { getPosts, getTag } from '@/lib/reader'
 import Masthead from '@/components/Masthead'
+import Reveal from '@/components/Reveal'
 
 export const metadata = { title: 'News' }
 
@@ -34,8 +35,8 @@ export default async function NewsPage() {
         </div>
       ) : (
         <ul className="divide-y divide-[color:var(--color-line)]">
-          {withTags.map((p) => (
-            <li key={p.id}>
+          {withTags.map((p, i) => (
+            <Reveal as="li" key={p.id} delay={i * 0.05}>
               <Link
                 href={`/news/${p.slug}`}
                 className="group grid grid-cols-12 gap-3 sm:gap-6 py-8 sm:py-10 -mx-3 sm:-mx-5 px-3 sm:px-5 hover:bg-[color:var(--color-surface)] transition-colors"
@@ -80,7 +81,7 @@ export default async function NewsPage() {
                   </div>
                 )}
               </Link>
-            </li>
+            </Reveal>
           ))}
         </ul>
       )}

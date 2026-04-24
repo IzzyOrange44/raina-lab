@@ -1,5 +1,6 @@
 import { getAlumni, getRoleLabel } from '@/lib/reader'
 import Masthead from '@/components/Masthead'
+import Reveal from '@/components/Reveal'
 
 export const metadata = { title: 'Alumni' }
 
@@ -31,9 +32,11 @@ export default async function AlumniPage() {
         </div>
       ) : (
         <ul className="divide-y divide-[color:var(--color-line)]">
-          {withRoles.map((m) => (
-            <li
+          {withRoles.map((m, i) => (
+            <Reveal
+              as="li"
               key={m.id}
+              delay={i * 0.04}
               className="grid grid-cols-12 gap-3 sm:gap-6 py-7 sm:py-8 items-baseline"
             >
               <div className="col-span-12 sm:col-span-2 label tabular">
@@ -56,7 +59,7 @@ export default async function AlumniPage() {
                   </p>
                 )}
               </div>
-            </li>
+            </Reveal>
           ))}
         </ul>
       )}

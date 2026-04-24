@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Geist, Geist_Mono } from 'next/font/google'
 import Nav from '@/components/Nav'
+import ScrollProgress from '@/components/ScrollProgress'
 import '../globals.css'
 
 const geistSans = Geist({
@@ -35,6 +36,7 @@ export default function SiteLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full">
+        <ScrollProgress />
         <div className="min-h-full flex flex-col">
           <header className="sticky top-0 z-20 bg-[color:var(--color-canvas)]/80 backdrop-blur-lg border-b border-[color:var(--color-line)]">
             <div className="max-w-[82rem] mx-auto px-5 sm:px-8 lg:px-12 flex items-center justify-between gap-6 h-16 sm:h-18">

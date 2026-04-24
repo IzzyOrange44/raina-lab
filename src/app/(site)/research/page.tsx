@@ -1,5 +1,6 @@
 import { getResearchAreas } from '@/lib/reader'
 import Masthead from '@/components/Masthead'
+import Reveal from '@/components/Reveal'
 
 export const metadata = { title: 'Research' }
 
@@ -25,7 +26,7 @@ export default async function ResearchPage() {
               id={area.slug}
               className="scroll-mt-32 grid grid-cols-12 gap-6 lg:gap-12"
             >
-              <div className="col-span-12 lg:col-span-3">
+              <Reveal className="col-span-12 lg:col-span-3">
                 <div className="lg:sticky lg:top-32 flex items-baseline gap-3">
                   <span
                     className="h-2 w-2 rounded-full bg-[color:var(--color-accent)] shrink-0"
@@ -35,9 +36,9 @@ export default async function ResearchPage() {
                     {String(i + 1).padStart(2, '0')}
                   </p>
                 </div>
-              </div>
+              </Reveal>
 
-              <div className="col-span-12 lg:col-span-9">
+              <Reveal delay={0.1} className="col-span-12 lg:col-span-9">
                 <h2 className="display-lg text-3xl sm:text-5xl lg:text-[3.5rem] text-balance">
                   {area.title}
                 </h2>
@@ -58,7 +59,7 @@ export default async function ResearchPage() {
                     {area.shortDescription}
                   </p>
                 )}
-              </div>
+              </Reveal>
             </section>
           ))}
         </div>
