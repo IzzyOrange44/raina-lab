@@ -1,6 +1,7 @@
 import { buildConfig, type CollectionConfig, type GlobalConfig } from 'payload'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
@@ -9,6 +10,23 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 /* ───── Collections ───── */
+
+const Media: CollectionConfig = {
+  slug: 'media',
+  access: { read: () => true },
+  upload: {
+    mimeTypes: ['image/*'],
+  },
+  fields: [
+    {
+      name: 'alt',
+      type: 'text',
+      admin: {
+        description: 'Alt text for screen readers and search engines.',
+      },
+    },
+  ],
+}
 
 const Users: CollectionConfig = {
   slug: 'users',
@@ -102,7 +120,20 @@ const Members: CollectionConfig = {
       },
       hooks: slugifyHook,
     },
-    { name: 'photo', type: 'text', admin: { description: 'Image URL' } },
+    {
+      name: 'photoUpload',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description:
+          'Upload a headshot (drag and drop) — used when set. Otherwise falls back to Photo URL.',
+      },
+    },
+    {
+      name: 'photo',
+      type: 'text',
+      admin: { description: 'Photo URL (optional fallback)' },
+    },
     { name: 'role', type: 'relationship', relationTo: 'roles' },
     {
       name: 'featured',
@@ -193,7 +224,16 @@ const ResearchAreas: CollectionConfig = {
       admin: { description: 'Show on home page' },
     },
     { name: 'shortDescription', type: 'textarea' },
-    { name: 'image', type: 'text', admin: { description: 'Image URL' } },
+    {
+      name: 'imageUpload',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description:
+          'Upload an illustration (drag and drop) — used when set. Otherwise falls back to Image URL.',
+      },
+    },
+    { name: 'image', type: 'text', admin: { description: 'Image URL (optional fallback)' } },
     {
       name: 'relatedMembers',
       type: 'relationship',
@@ -224,7 +264,20 @@ const Posts: CollectionConfig = {
     { name: 'publishedDate', type: 'date', required: true },
     { name: 'tag', type: 'relationship', relationTo: 'tags' },
     { name: 'excerpt', type: 'textarea' },
-    { name: 'coverImage', type: 'text', admin: { description: 'Image URL' } },
+    {
+      name: 'coverImageUpload',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description:
+          'Upload a cover image (drag and drop) — used when set. Otherwise falls back to Cover image URL.',
+      },
+    },
+    {
+      name: 'coverImage',
+      type: 'text',
+      admin: { description: 'Cover image URL (optional fallback)' },
+    },
     {
       name: 'draft',
       type: 'checkbox',
@@ -243,7 +296,20 @@ const Home: GlobalConfig = {
   fields: [
     { name: 'tagline', type: 'text' },
     { name: 'intro', type: 'textarea' },
-    { name: 'heroImage', type: 'text', admin: { description: 'Image URL' } },
+    {
+      name: 'heroImageUpload',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description:
+          'Upload a hero image (drag and drop) — used when set. Otherwise falls back to Hero image URL.',
+      },
+    },
+    {
+      name: 'heroImage',
+      type: 'text',
+      admin: { description: 'Hero image URL (optional fallback)' },
+    },
   ],
 }
 
@@ -604,7 +670,7 @@ export default buildConfig({
       },
     },
   },
-  collections: [Users, Members, Roles, Tags, ResearchAreas, Posts],
+  collections: [Users, Members, Roles, Tags, ResearchAreas, Posts, Media],
   globals: [Home, About, Contact],
   editor: lexicalEditor({}),
   db: postgresAdapter({
@@ -622,6 +688,13 @@ export default buildConfig({
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   routes: { admin: '/admin', api: '/api' },
+  plugins: [
+    vercelBlobStorage({
+      enabled: !!process.env.BLOB_READ_WRITE_TOKEN,
+      collections: { media: true },
+      token: process.env.BLOB_READ_WRITE_TOKEN ?? '',
+    }),
+  ],
   onInit: async (payload) => {
     /* Roles */
     const existingRoles = await payload.count({ collection: 'roles' })

@@ -10,9 +10,38 @@ async function payload() {
   return getPayload({ config })
 }
 
+/** Prefer an uploaded Media doc's URL; fall back to a plain text URL. */
+function resolveImage(upload: unknown, fallbackUrl?: string | null): string | null {
+  if (upload && typeof upload === 'object' && 'url' in upload) {
+    const url = (upload as { url?: string | null }).url
+    if (url) return url
+  }
+  if (typeof fallbackUrl === 'string' && fallbackUrl.length > 0) return fallbackUrl
+  return null
+}
+
+function hydrateImages<T extends Record<string, any>>(doc: T): T {
+  if (!doc) return doc
+  const next: any = { ...doc }
+  if ('photoUpload' in doc || 'photo' in doc) {
+    next.photo = resolveImage(doc.photoUpload, doc.photo)
+  }
+  if ('imageUpload' in doc || 'image' in doc) {
+    next.image = resolveImage(doc.imageUpload, doc.image)
+  }
+  if ('coverImageUpload' in doc || 'coverImage' in doc) {
+    next.coverImage = resolveImage(doc.coverImageUpload, doc.coverImage)
+  }
+  if ('heroImageUpload' in doc || 'heroImage' in doc) {
+    next.heroImage = resolveImage(doc.heroImageUpload, doc.heroImage)
+  }
+  return next as T
+}
+
 export async function getHome(): Promise<any> {
   const p = await payload()
-  return p.findGlobal({ slug: 'home' as any })
+  const doc = await p.findGlobal({ slug: 'home' as any })
+  return hydrateImages(doc as any)
 }
 
 export async function getAbout(): Promise<any> {
@@ -33,7 +62,7 @@ export async function getCurrentMembers(): Promise<any[]> {
     limit: 200,
     sort: ['-featured', 'name'] as any,
   })
-  return docs
+  return docs.map(hydrateImages)
 }
 
 export async function getAlumni(): Promise<any[]> {
@@ -44,7 +73,7 @@ export async function getAlumni(): Promise<any[]> {
     limit: 200,
     sort: '-endDate',
   })
-  return docs
+  return docs.map(hydrateImages)
 }
 
 export async function getMember(slug: string): Promise<any> {
@@ -54,7 +83,7 @@ export async function getMember(slug: string): Promise<any> {
     where: { slug: { equals: slug } },
     limit: 1,
   })
-  return docs[0] ?? null
+  return docs[0] ? hydrateImages(docs[0]) : null
 }
 
 export async function getResearchAreas(): Promise<any[]> {
@@ -64,7 +93,7 @@ export async function getResearchAreas(): Promise<any[]> {
     limit: 100,
     sort: 'order',
   })
-  return docs
+  return docs.map(hydrateImages)
 }
 
 export async function getFeaturedResearchAreas(): Promise<any[]> {
@@ -75,7 +104,7 @@ export async function getFeaturedResearchAreas(): Promise<any[]> {
     limit: 20,
     sort: 'order',
   })
-  return docs
+  return docs.map(hydrateImages)
 }
 
 export async function getPosts(): Promise<any[]> {
@@ -86,7 +115,7 @@ export async function getPosts(): Promise<any[]> {
     limit: 200,
     sort: '-publishedDate',
   })
-  return docs
+  return docs.map(hydrateImages)
 }
 
 export async function getLatestPosts(limit = 4): Promise<any[]> {
@@ -97,7 +126,7 @@ export async function getLatestPosts(limit = 4): Promise<any[]> {
     limit,
     sort: '-publishedDate',
   })
-  return docs
+  return docs.map(hydrateImages)
 }
 
 export async function getPost(slug: string): Promise<any> {
@@ -107,7 +136,7 @@ export async function getPost(slug: string): Promise<any> {
     where: { slug: { equals: slug } },
     limit: 1,
   })
-  return docs[0] ?? null
+  return docs[0] ? hydrateImages(docs[0]) : null
 }
 
 export async function getRoleLabel(role: unknown): Promise<string | null> {
