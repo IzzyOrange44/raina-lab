@@ -539,20 +539,24 @@ const seedPosts = [
 
 const seedHome = {
   tagline:
-    'Molecular genetics of plant immunity and stress response in Arabidopsis thaliana.',
+    'Genetic and molecular mechanisms of gene regulation and environmental response in Arabidopsis thaliana.',
   intro:
-    'The laboratory investigates the molecular mechanisms by which Arabidopsis thaliana perceives and responds to pathogens and environmental stress. Our research combines forward and reverse genetics with functional genomics to characterise receptor-like kinases, small-RNA pathways, and the gene regulatory networks underlying plant defence.',
+    'The laboratory investigates how Arabidopsis thaliana regulates gene expression and responds to biotic and abiotic stress. Our work spans receptor-like kinase signalling, small-RNA pathways, and chromatin-level regulation by histone-modifying enzymes — combined through forward and reverse genetics, functional genomics, and molecular biology.',
   heroImage:
     'https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=2000&q=80&auto=format&fit=crop',
 }
 
-/* Previously-seeded home copy. If the live DB still matches these verbatim,
-   onInit will quietly swap in the new academic copy above. Any PI edit
-   already shipped means the fields won't match and nothing is overwritten. */
-const OLD_HOME_TAGLINE =
-  'How plants sense the environment and defend themselves.'
-const OLD_HOME_INTRO =
-  'The Raina Lab studies the molecular genetics of plant–pathogen interactions in Arabidopsis thaliana — receptor-like kinases, small RNAs, and the defence programmes they trigger.'
+/* Previously-seeded home copy. onInit replaces the live values ONLY when
+   they still match one of these verbatim — so PI edits via the admin are
+   never overwritten. Add new entries here when the copy changes again. */
+const OLD_HOME_TAGLINES = [
+  'How plants sense the environment and defend themselves.',
+  'Molecular genetics of plant immunity and stress response in Arabidopsis thaliana.',
+]
+const OLD_HOME_INTROS = [
+  'The Raina Lab studies the molecular genetics of plant–pathogen interactions in Arabidopsis thaliana — receptor-like kinases, small RNAs, and the defence programmes they trigger.',
+  'The laboratory investigates the molecular mechanisms by which Arabidopsis thaliana perceives and responds to pathogens and environmental stress. Our research combines forward and reverse genetics with functional genomics to characterise receptor-like kinases, small-RNA pathways, and the gene regulatory networks underlying plant defence.',
+]
 
 const seedAbout = {
   mission:
@@ -756,16 +760,18 @@ export default buildConfig({
       await payload.updateGlobal({ slug: 'home', data: seedHome as any })
       payload.logger.info('Seeded home global')
     } else if (
-      home.tagline === OLD_HOME_TAGLINE ||
-      home.intro === OLD_HOME_INTRO
+      OLD_HOME_TAGLINES.includes(home.tagline) ||
+      (home.intro && OLD_HOME_INTROS.includes(home.intro))
     ) {
       const patch: Record<string, string | null | undefined> = {}
-      if (home.tagline === OLD_HOME_TAGLINE) patch.tagline = seedHome.tagline
-      if (home.intro === OLD_HOME_INTRO) patch.intro = seedHome.intro
+      if (OLD_HOME_TAGLINES.includes(home.tagline))
+        patch.tagline = seedHome.tagline
+      if (home.intro && OLD_HOME_INTROS.includes(home.intro))
+        patch.intro = seedHome.intro
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       await payload.updateGlobal({ slug: 'home', data: patch as any })
       payload.logger.info(
-        `Migrated home global copy (${Object.keys(patch).join(', ')}) to academic register`,
+        `Migrated home global copy (${Object.keys(patch).join(', ')})`,
       )
     }
     const about = await payload.findGlobal({ slug: 'about' })
