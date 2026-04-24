@@ -407,6 +407,55 @@ const seedMembers = [
       'Ramesh Raina is Professor in the Department of Biology at Syracuse University. His lab studies the molecular basis of plant–pathogen interactions, functional genomics of receptor-like kinases in Arabidopsis, and plant responses to abiotic stresses.',
     ]),
   },
+  {
+    name: 'Taylor Stubitsch',
+    slug: 'taylor-stubitsch',
+    roleLabel: 'Undergraduate',
+    featured: false,
+    shortBio:
+      'Biochemistry and Forensic Science major, Psychology minor. Graduating 2026 and applying to medical school.',
+    status: 'current' as const,
+  },
+  {
+    name: 'Katie Bakley',
+    slug: 'katie-bakley',
+    roleLabel: 'Undergraduate',
+    featured: false,
+    shortBio:
+      '4+1 Biotechnology program: BS 2026, MS 2027. Honors thesis on JMJ1 and JMJ2 in Arabidopsis defence and development.',
+    status: 'current' as const,
+    fullBio: lexical([
+      'Katie is a junior enrolled in the 4+1 Biotechnology program. She will earn her BS in Biotechnology in December 2026, followed by her MS in December 2027. After graduation, she hopes to pursue a career in the biotechnology industry.',
+      'Outside of the Raina Lab, Katie has worked as a Student Research Associate at Drexel University and will be joining DSM-Firmenich as a Quality Control Intern in Summer 2026. She is a member of the Renée Crown University Honors Program, and her thesis work focuses on the role of JMJ1 and JMJ2 in defence and development in Arabidopsis.',
+    ]),
+  },
+  {
+    name: 'Taryn Keefe',
+    slug: 'taryn-keefe',
+    roleLabel: 'Undergraduate',
+    featured: false,
+    shortBio:
+      'Researching JMJ21 and its role in abiotic and biotic stress responses in Arabidopsis thaliana.',
+    status: 'current' as const,
+    fullBio: lexical([
+      'Taryn is researching JMJ21 and its role in abiotic and biotic stress responses in Arabidopsis thaliana.',
+      'On campus, she serves in leadership roles across the Biotechnology Society, Campus Cursive, and the MaryAnn Shaw Center, and acts as a student ambassador for SOURCE and the College of Arts and Sciences. She is also a member of Omega Alpha Tau (Biotechnology Fraternity) and Pi Mu Epsilon (Math Honors Society).',
+      'This summer she will be researching at Trent University as a Fulbright Canada–Mitacs Globalink Research Intern, focusing on metagenomics and the global carbon cycle.',
+    ]),
+  },
+  {
+    name: 'Sevara Abduvalieva',
+    slug: 'sevara-abduvalieva',
+    roleLabel: 'Undergraduate',
+    featured: false,
+    shortBio:
+      'Senior, BS Biotechnology with a minor in Chemistry. Honors thesis on the JMJ27 protein in Arabidopsis thaliana.',
+    status: 'current' as const,
+    fullBio: lexical([
+      'Sevara Abduvalieva is a senior at Syracuse University, graduating in 2026 with a B.S. in Biotechnology and a minor in Chemistry. She is a member of the Renée Crown University Honors Program and plans to pursue medical school following graduation.',
+      'Her honors thesis focuses on the characterisation of the JMJ27 protein in Arabidopsis thaliana.',
+    ]),
+  },
   /* Placeholder alumni — clearly fake, replace via the admin. */
   {
     name: 'A. Former Researcher',
