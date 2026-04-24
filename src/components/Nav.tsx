@@ -16,34 +16,32 @@ export default function Nav() {
   const pathname = usePathname()
 
   return (
-    <nav className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
-      <Link
-        href="/"
-        className="font-semibold text-lg tracking-tight hover:text-neutral-600 transition-colors"
-      >
-        Raina Lab
-      </Link>
-      <ul className="flex gap-6 text-sm">
-        {links.map((l) => {
-          const active =
-            pathname === l.href ||
-            (l.href !== '/' && pathname.startsWith(l.href))
-          return (
-            <li key={l.href}>
-              <Link
-                href={l.href}
-                className={
-                  active
-                    ? 'text-neutral-900 font-medium'
-                    : 'text-neutral-600 hover:text-neutral-900 transition-colors'
-                }
-              >
-                {l.label}
-              </Link>
-            </li>
-          )
-        })}
-      </ul>
-    </nav>
+    <ul className="flex flex-wrap items-center gap-x-7 gap-y-2 text-sm tracking-tight">
+      {links.map((l) => {
+        const active =
+          pathname === l.href ||
+          (l.href !== '/' && pathname.startsWith(l.href))
+        return (
+          <li key={l.href} className="relative">
+            {active && (
+              <span
+                aria-hidden
+                className="absolute -left-3 top-1/2 -translate-y-1/2 h-1.5 w-1.5 rounded-full bg-[color:var(--color-accent)]"
+              />
+            )}
+            <Link
+              href={l.href}
+              className={
+                active
+                  ? 'text-[color:var(--color-ink)] font-medium'
+                  : 'text-[color:var(--color-ink-3)] hover:text-[color:var(--color-ink)] transition-colors font-medium'
+              }
+            >
+              {l.label}
+            </Link>
+          </li>
+        )
+      })}
+    </ul>
   )
 }

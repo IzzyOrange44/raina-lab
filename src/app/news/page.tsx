@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { getPosts, getTag } from '@/lib/reader'
+import Masthead from '@/components/Masthead'
 
 export const metadata = { title: 'News' }
 
@@ -10,39 +11,66 @@ export default async function NewsPage() {
   )
 
   return (
-    <div>
-      <h1 className="text-4xl font-bold tracking-tight mb-8">News</h1>
+    <article>
+      <Masthead title="News" />
+
       {withTags.length === 0 ? (
-        <p className="text-neutral-500">No posts yet.</p>
+        <div className="flex items-center justify-center py-24 opacity-40">
+          <span
+            className="h-3 w-3 rounded-full bg-[color:var(--color-accent)]"
+            aria-hidden
+          />
+        </div>
       ) : (
-        <ul className="space-y-6">
+        <ul className="divide-y divide-[color:var(--color-line)]">
           {withTags.map((p) => (
             <li key={p.slug}>
-              <Link href={`/news/${p.slug}`} className="group block">
-                <div className="flex items-center gap-3 text-sm text-neutral-500">
-                  {p.publishedDate && <time>{p.publishedDate}</time>}
+              <Link
+                href={`/news/${p.slug}`}
+                className="group grid grid-cols-12 gap-3 sm:gap-6 py-8 sm:py-10 -mx-3 sm:-mx-5 px-3 sm:px-5 hover:bg-[color:var(--color-surface)] transition-colors"
+              >
+                <div className="col-span-12 sm:col-span-3 lg:col-span-2 flex flex-col gap-1.5 pt-1">
+                  {p.publishedDate && (
+                    <time className="label tabular">{p.publishedDate}</time>
+                  )}
                   {p.tagData && (
                     <span
-                      className="px-2 py-0.5 rounded text-xs font-medium text-white"
+                      className="label-strong"
                       style={{
-                        background: p.tagData.color || '#6b7280',
+                        color: p.tagData.color || 'var(--color-accent)',
                       }}
                     >
                       {p.tagData.label}
                     </span>
                   )}
                 </div>
-                <h2 className="mt-1 text-xl font-semibold group-hover:underline">
-                  {p.title}
-                </h2>
-                {p.excerpt && (
-                  <p className="mt-1 text-neutral-700">{p.excerpt}</p>
+
+                <div className="col-span-12 sm:col-span-9 lg:col-span-9">
+                  <h2 className="display-md text-xl sm:text-2xl lg:text-3xl text-[color:var(--color-ink)] group-hover:text-[color:var(--color-accent-dark)] transition-colors duration-300 leading-tight text-balance">
+                    {p.title}
+                  </h2>
+                  {p.excerpt && (
+                    <p className="text-[color:var(--color-ink-3)] mt-3 leading-relaxed max-w-[44rem]">
+                      {p.excerpt}
+                    </p>
+                  )}
+                </div>
+
+                {p.coverImage && (
+                  <div className="hidden lg:block lg:col-span-1">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={p.coverImage}
+                      alt=""
+                      className="w-full aspect-square object-cover border border-[color:var(--color-line)]"
+                    />
+                  </div>
                 )}
               </Link>
             </li>
           ))}
         </ul>
       )}
-    </div>
+    </article>
   )
 }

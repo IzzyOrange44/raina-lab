@@ -1,19 +1,181 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme inline {
+  /* Palette — stark, modern, authoritative */
+  --color-canvas: #fafafa;
+  --color-surface: #ffffff;
+  --color-ink: #0a0a0a;
+  --color-ink-2: #262626;
+  --color-ink-3: #525252;
+  --color-ink-4: #737373;
+  --color-ink-5: #a3a3a3;
+  --color-line: #e5e5e5;
+  --color-line-strong: #d4d4d4;
+  --color-accent: #059669;
+  --color-accent-dark: #047857;
+  --color-accent-light: #10b981;
+  --color-accent-subtle: #ecfdf5;
+
+  /* Typography */
+  --font-display: var(--font-geist-sans);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
+html {
+  background: var(--color-canvas);
+  color: var(--color-ink);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  font-feature-settings: "ss01", "cv11";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-ink);
+  color: var(--color-canvas);
+}
+
+/* Font utility classes */
+.sans { font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif; }
+.mono { font-family: var(--font-mono), ui-monospace, SFMono-Regular, monospace; }
+
+/* Typography scale — modern, tight */
+.display-xl {
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+}
+.display-lg {
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+}
+.display-md {
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+
+/* Metadata label — small uppercase mono */
+.label {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink-4);
+  font-weight: 400;
+}
+.label-strong {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  font-weight: 500;
+}
+
+/* Tabular numerics for alignment */
+.tabular { font-variant-numeric: tabular-nums; }
+
+/* Underlined link — reveal on hover */
+.link-reveal {
+  position: relative;
+  text-decoration: none;
+}
+.link-reveal::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 400ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.link-reveal:hover::after {
+  transform: scaleX(1);
+}
+
+.link-underline {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: color-mix(in oklab, currentColor 35%, transparent);
+  transition: text-decoration-color 300ms;
+}
+.link-underline:hover {
+  text-decoration-color: currentColor;
+}
+
+/* Entry animation — restrained, modern */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.rise {
+  animation: rise 700ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.rise-1 { animation-delay: 0ms; }
+.rise-2 { animation-delay: 80ms; }
+.rise-3 { animation-delay: 160ms; }
+.rise-4 { animation-delay: 240ms; }
+.rise-5 { animation-delay: 320ms; }
+
+/* Prose overrides — sans-forward, clean */
+.prose-sleek {
+  --tw-prose-body: var(--color-ink-2);
+  --tw-prose-headings: var(--color-ink);
+  --tw-prose-links: var(--color-ink);
+  --tw-prose-bold: var(--color-ink);
+  --tw-prose-quotes: var(--color-ink-3);
+  --tw-prose-quote-borders: var(--color-line-strong);
+  --tw-prose-bullets: var(--color-ink-4);
+  --tw-prose-counters: var(--color-ink-4);
+  --tw-prose-hr: var(--color-line);
+  --tw-prose-captions: var(--color-ink-4);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  letter-spacing: -0.005em;
+}
+.prose-sleek h1,
+.prose-sleek h2,
+.prose-sleek h3 {
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+}
+.prose-sleek a {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  font-weight: 500;
+}
+.prose-sleek strong {
+  font-weight: 600;
+}
+
+/* Subtle dotted grid background for hero sections */
+.dot-grid {
+  background-image: radial-gradient(circle, var(--color-line-strong) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-position: -1px -1px;
 }

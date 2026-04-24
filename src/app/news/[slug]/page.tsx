@@ -16,35 +16,53 @@ export default async function NewsPostPage({
   const body = await post.body()
 
   return (
-    <article>
-      <Link href="/news" className="text-sm text-neutral-500 hover:underline">
+    <article className="max-w-[44rem] mx-auto">
+      <Link
+        href="/news"
+        className="label hover:text-[color:var(--color-ink)] transition-colors inline-block mb-10"
+      >
         ← News
       </Link>
-      <header className="mt-6">
-        <div className="flex items-center gap-3 text-sm text-neutral-500">
-          {post.publishedDate && <time>{post.publishedDate}</time>}
-          {tag && (
-            <span
-              className="px-2 py-0.5 rounded text-xs font-medium text-white"
-              style={{ background: tag.color || '#6b7280' }}
-            >
-              {tag.label}
-            </span>
-          )}
-        </div>
-        <h1 className="mt-2 text-4xl font-bold tracking-tight">{post.title}</h1>
-        {post.excerpt && (
-          <p className="mt-3 text-lg text-neutral-700">{post.excerpt}</p>
+
+      <header className="mb-14 pb-10 border-b border-[color:var(--color-line)]">
+        {(post.publishedDate || tag) && (
+          <div className="flex items-center gap-4 label tabular mb-8">
+            {post.publishedDate && <time>{post.publishedDate}</time>}
+            {post.publishedDate && tag && (
+              <span className="h-1 w-1 rounded-full bg-[color:var(--color-ink-4)]" aria-hidden />
+            )}
+            {tag && (
+              <span
+                className="label-strong"
+                style={{ color: tag.color || 'var(--color-accent)' }}
+              >
+                {tag.label}
+              </span>
+            )}
+          </div>
         )}
+
+        <h1 className="display-xl text-[clamp(2.5rem,6vw,4rem)] text-balance">
+          {post.title}
+        </h1>
+
+        {post.excerpt && (
+          <p className="text-xl sm:text-2xl text-[color:var(--color-ink-3)] mt-6 leading-[1.45]">
+            {post.excerpt}
+          </p>
+        )}
+
         {post.coverImage && (
+          /* eslint-disable-next-line @next/next/no-img-element */
           <img
             src={post.coverImage}
             alt=""
-            className="mt-6 w-full rounded-lg object-cover"
+            className="mt-10 w-full border border-[color:var(--color-line)]"
           />
         )}
       </header>
-      <div className="prose prose-neutral mt-8 max-w-none">
+
+      <div className="prose prose-sleek max-w-none">
         <DocumentRenderer document={body} />
       </div>
     </article>

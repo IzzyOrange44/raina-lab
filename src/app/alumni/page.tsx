@@ -1,4 +1,5 @@
 import { getAlumni, getRoleLabel } from '@/lib/reader'
+import Masthead from '@/components/Masthead'
 
 export const metadata = { title: 'Alumni' }
 
@@ -12,36 +13,44 @@ export default async function AlumniPage() {
   )
 
   return (
-    <div>
-      <h1 className="text-4xl font-bold tracking-tight mb-8">Alumni</h1>
+    <article>
+      <Masthead title="Alumni" />
+
       {withRoles.length === 0 ? (
-        <p className="text-neutral-500">No alumni yet.</p>
+        <div className="flex items-center justify-center py-24 opacity-40">
+          <span
+            className="h-3 w-3 rounded-full bg-[color:var(--color-accent)]"
+            aria-hidden
+          />
+        </div>
       ) : (
-        <ul className="divide-y divide-neutral-200">
+        <ul className="divide-y divide-[color:var(--color-line)]">
           {withRoles.map((m) => {
             const alumniInfo =
               m.status.discriminant === 'alumni' ? m.status.value : null
             return (
-              <li key={m.slug} className="py-4 flex gap-4 items-start">
-                {m.photo && (
-                  <img
-                    src={m.photo}
-                    alt={m.name}
-                    className="w-16 h-16 rounded object-cover"
-                  />
-                )}
-                <div className="flex-1">
-                  <div className="font-medium">{m.name}</div>
-                  <div className="text-sm text-neutral-500">
-                    {m.roleLabel}
-                    {alumniInfo?.endDate && (
-                      <span> · until {alumniInfo.endDate}</span>
-                    )}
-                  </div>
+              <li
+                key={m.slug}
+                className="grid grid-cols-12 gap-3 sm:gap-6 py-7 sm:py-8 items-baseline"
+              >
+                <div className="col-span-12 sm:col-span-2 label tabular">
+                  {alumniInfo?.endDate ?? ''}
+                </div>
+                <div className="col-span-12 sm:col-span-5 lg:col-span-6">
+                  <h3 className="display-md text-xl sm:text-2xl text-[color:var(--color-ink)] leading-tight">
+                    {m.name}
+                  </h3>
+                  {m.roleLabel && (
+                    <p className="label text-[color:var(--color-accent)] mt-1.5">
+                      {m.roleLabel}
+                    </p>
+                  )}
+                </div>
+                <div className="col-span-12 sm:col-span-5 lg:col-span-4">
                   {alumniInfo?.currentPosition && (
-                    <div className="text-sm text-neutral-700 mt-1">
-                      Now: {alumniInfo.currentPosition}
-                    </div>
+                    <p className="text-[color:var(--color-ink-2)] leading-snug">
+                      {alumniInfo.currentPosition}
+                    </p>
                   )}
                 </div>
               </li>
@@ -49,6 +58,6 @@ export default async function AlumniPage() {
           })}
         </ul>
       )}
-    </div>
+    </article>
   )
 }
