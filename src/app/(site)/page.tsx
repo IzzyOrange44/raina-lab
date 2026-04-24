@@ -70,6 +70,17 @@ export default async function HomePage() {
         </section>
       </HeroParallax>
 
+      {home?.heroImage && (
+        <Reveal className="relative -mx-5 sm:-mx-8 lg:-mx-12 overflow-hidden">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={home.heroImage}
+            alt=""
+            className="w-full aspect-[21/9] object-cover"
+          />
+        </Reveal>
+      )}
+
       {featured.length > 0 && (
         <section>
           <Reveal>

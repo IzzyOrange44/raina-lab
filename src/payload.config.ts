@@ -303,6 +303,268 @@ const seedTags = [
   { label: 'Other', color: '#6b7280' },
 ]
 
+/** Build a minimal Lexical rich-text value from plain paragraphs. */
+function lexical(paragraphs: string[]) {
+  return {
+    root: {
+      type: 'root' as const,
+      format: '' as const,
+      indent: 0,
+      version: 1,
+      direction: 'ltr' as const,
+      children: paragraphs.map((p) => ({
+        type: 'paragraph' as const,
+        format: '' as const,
+        indent: 0,
+        version: 1,
+        direction: 'ltr' as const,
+        textFormat: 0,
+        textStyle: '',
+        children: [
+          {
+            type: 'text' as const,
+            text: p,
+            format: 0,
+            detail: 0,
+            mode: 'normal' as const,
+            style: '',
+            version: 1,
+          },
+        ],
+      })),
+    },
+  }
+}
+
+const seedResearchAreas = [
+  {
+    title: 'Plant–Pathogen Interactions',
+    slug: 'plant-pathogen-interactions',
+    order: 1,
+    featured: true,
+    shortDescription:
+      'Genetic and molecular mechanisms controlling plant responses to pathogen infection — from the hypersensitive response to systemic acquired resistance.',
+    image:
+      'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=1600&q=80&auto=format&fit=crop',
+    body: lexical([
+      'We use forward and reverse genetic approaches in Arabidopsis thaliana to identify the genes that govern how plants detect pathogens and mount a defence. Our work has characterised mutants such as hrl1 and dll1 that spontaneously develop hypersensitive-response-like lesions and express defence genes constitutively.',
+      'Through suppression subtractive hybridisation and microarray analysis we have identified over a thousand differentially expressed genes in response to pathogens, hormones, and stress, most with no previously characterised role in defence.',
+    ]),
+  },
+  {
+    title: 'Receptor-Like Kinases',
+    slug: 'receptor-like-kinases',
+    order: 2,
+    featured: true,
+    shortDescription:
+      'Functional genomics of the 600+ receptor-like kinase family in Arabidopsis — how plants perceive environmental and pathogen-derived signals at the cell surface.',
+    image:
+      'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=1600&q=80&auto=format&fit=crop',
+    body: lexical([
+      'Receptor-like kinases (RLKs) are the largest family of signalling receptors in Arabidopsis, exceeding 600 members. We study their role in plant–pathogen interactions, abiotic stress responses, and development.',
+      'To accelerate RLK functional analysis we developed a chimeric receptor toolkit that fuses target RLK extracellular domains to the kinase domain of a defence-activating RLK, coupling perception to a visible hypersensitive-response reporter.',
+    ]),
+  },
+  {
+    title: 'microRNA-Mediated Defence',
+    slug: 'microrna-mediated-defence',
+    order: 3,
+    featured: true,
+    shortDescription:
+      'How plant microRNAs post-transcriptionally regulate defence against bacterial pathogens — including the salicylic-acid-dependent miR167 / ARF6 / ARF8 circuit.',
+    image:
+      'https://images.unsplash.com/photo-1530026186672-2cd00ffc50fe?w=1600&q=80&auto=format&fit=crop',
+    body: lexical([
+      'We have shown that Arabidopsis miR167 and its targets ARF6 and ARF8 regulate resistance to Pseudomonas syringae through a salicylic-acid-dependent pathway, linking the post-transcriptional machinery of plants to their innate immune system.',
+      'Current work explores how small RNAs integrate biotic and abiotic signals and modulate the expression of receptor-like kinases and defence gene networks.',
+    ]),
+  },
+  {
+    title: 'Abiotic Stress Responses',
+    slug: 'abiotic-stress-responses',
+    order: 4,
+    featured: false,
+    shortDescription:
+      'How plants sense and respond to drought, temperature, and oxidative stress — and how these responses interact with pathogen defence.',
+    body: lexical([
+      'Plants in the field rarely encounter a single stress in isolation. We investigate how signalling networks integrate responses to pathogens with responses to drought, heat, cold, and reactive oxygen species.',
+    ]),
+  },
+]
+
+const seedMembers = [
+  {
+    name: 'Ramesh Raina',
+    slug: 'ramesh-raina',
+    roleLabel: 'Principal Investigator',
+    featured: true,
+    shortBio: 'Professor of Biology, Syracuse University.',
+    email: 'raraina@syr.edu',
+    links: { website: 'https://rainalab.syr.edu/' },
+    status: 'current' as const,
+    photo: null,
+    fullBio: lexical([
+      'Ramesh Raina is Professor in the Department of Biology at Syracuse University. His lab studies the molecular basis of plant–pathogen interactions, functional genomics of receptor-like kinases in Arabidopsis, and plant responses to abiotic stresses.',
+    ]),
+  },
+  {
+    name: 'Pratibha Choudhury',
+    slug: 'pratibha-choudhury',
+    roleLabel: 'Postdoc',
+    featured: false,
+    shortBio: 'Postdoctoral Associate.',
+    status: 'current' as const,
+  },
+  {
+    name: 'Nikhilesh Dhar',
+    slug: 'nikhilesh-dhar',
+    roleLabel: 'Postdoc',
+    featured: false,
+    shortBio: 'Postdoctoral researcher.',
+    status: 'current' as const,
+  },
+  {
+    name: 'Dan Li',
+    slug: 'dan-li',
+    roleLabel: 'PhD Student',
+    featured: false,
+    status: 'current' as const,
+  },
+  {
+    name: 'Irmak Erdem',
+    slug: 'irmak-erdem',
+    roleLabel: 'PhD Student',
+    featured: false,
+    status: 'current' as const,
+  },
+  {
+    name: 'Snigdha Chatterjee',
+    slug: 'snigdha-chatterjee',
+    roleLabel: 'Undergraduate',
+    featured: false,
+    shortBio: 'BS Biotechnology.',
+    status: 'current' as const,
+  },
+  {
+    name: 'Nelson Trusler',
+    slug: 'nelson-trusler',
+    roleLabel: 'Undergraduate',
+    featured: false,
+    shortBio: 'BS Biology.',
+    status: 'current' as const,
+  },
+  {
+    name: 'Pallavi Gupta',
+    slug: 'pallavi-gupta',
+    roleLabel: 'PhD Student',
+    featured: false,
+    status: 'alumni' as const,
+    endDate: '2013-05-15',
+    currentPosition: 'Research scientist in industry.',
+  },
+  {
+    name: 'Julie Caruana',
+    slug: 'julie-caruana',
+    roleLabel: 'PhD Student',
+    featured: false,
+    status: 'alumni' as const,
+    endDate: '2012-05-15',
+    currentPosition: 'Academic researcher.',
+  },
+  {
+    name: 'Aditya Dutta',
+    slug: 'aditya-dutta',
+    roleLabel: 'PhD Student',
+    featured: false,
+    status: 'alumni' as const,
+    endDate: '2011-05-15',
+    currentPosition: 'Industry scientist.',
+  },
+]
+
+const seedPosts = [
+  {
+    title: 'miR167 controls salicylic-acid-dependent defence in Arabidopsis',
+    slug: 'mir167-salicylic-acid-defence',
+    publishedDate: '2020-09-15',
+    tagLabel: 'Paper',
+    excerpt:
+      'Our Plant Direct paper shows that overexpression of Arabidopsis miR167 induces salicylic-acid-dependent defence against Pseudomonas syringae through its targets ARF6 and ARF8.',
+    coverImage:
+      'https://images.unsplash.com/photo-1530026186672-2cd00ffc50fe?w=1600&q=80&auto=format&fit=crop',
+    body: lexical([
+      'In Plant Direct, Caruana et al. demonstrate that the plant microRNA miR167 regulates resistance to the bacterial pathogen Pseudomonas syringae. Overexpression of miR167 reduces ARF6 and ARF8 transcripts and induces a salicylic-acid-dependent defence programme.',
+      'The finding links the post-transcriptional machinery of plants to their innate immune system and highlights microRNAs as integrators of developmental and defence signalling.',
+    ]),
+  },
+  {
+    title: 'SDA1 modulates pathogen defence and oxidative-stress tolerance',
+    slug: 'sda1-defence-oxidative-stress',
+    publishedDate: '2020-06-01',
+    tagLabel: 'Paper',
+    excerpt:
+      'Characterisation of SMALL DEFENSE-ASSOCIATED PROTEIN 1 as a regulator of bacterial defence and reactive-oxygen-species tolerance in Arabidopsis.',
+    body: lexical([
+      'sda1 loss-of-function mutants are compromised in defence gene expression and salicylic acid accumulation after Pseudomonas syringae infection, while also showing reduced tolerance to oxidative stress.',
+    ]),
+  },
+  {
+    title: 'HRL1 codes for AtPPT1 and regulates ROS accumulation',
+    slug: 'hrl1-atppt1-ros',
+    publishedDate: '2015-03-11',
+    tagLabel: 'Paper',
+    excerpt:
+      'The spontaneous-lesion mutant hrl1 is allelic to AtPPT1, linking phosphoenolpyruvate/phosphate translocator activity to reactive-oxygen-species homeostasis and defence.',
+    body: lexical([
+      'Our Frontiers in Plant Science paper maps the classic hrl1 mutation to AtPPT1, a plastidic phosphoenolpyruvate/phosphate translocator, establishing a connection between primary metabolism and defence gene activation.',
+    ]),
+  },
+  {
+    title: 'New graduate students welcomed to the lab',
+    slug: 'new-graduate-students-welcome',
+    publishedDate: '2024-09-01',
+    tagLabel: 'New Member',
+    excerpt:
+      'The Raina Lab welcomes its incoming graduate cohort and a new round of undergraduate researchers for the academic year.',
+    body: lexical([
+      'The lab is excited to introduce the newest members joining our Arabidopsis research programme. We look forward to their contributions to our work on plant defence and receptor-like kinase signalling.',
+    ]),
+  },
+]
+
+const seedHome = {
+  tagline: 'How plants sense the environment and defend themselves.',
+  intro:
+    'The Raina Lab studies the molecular genetics of plant–pathogen interactions in Arabidopsis thaliana — receptor-like kinases, small RNAs, and the defence programmes they trigger.',
+  heroImage:
+    'https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=2000&q=80&auto=format&fit=crop',
+}
+
+const seedAbout = {
+  mission:
+    'To understand how plants sense the environment and activate defence against pests, using genetic and molecular approaches in Arabidopsis.',
+  affiliation: 'Department of Biology, Syracuse University',
+  body: lexical([
+    'The Raina Lab uses forward and reverse genetics, functional genomics, and molecular biology to dissect the signalling networks that Arabidopsis thaliana uses to perceive pathogens and coordinate defence.',
+    'Our long-term goal is to understand the genetic and molecular mechanisms regulating the hypersensitive response, systemic acquired resistance, and disease-associated host cell death — and to translate those insights into more resilient crops.',
+    'The lab is housed in the Life Sciences Complex at Syracuse University and trains graduate students, postdoctoral researchers, and undergraduates across biotechnology and biology.',
+  ]),
+}
+
+const seedContact = {
+  email: 'raraina@syr.edu',
+  address:
+    'Raina Lab\nDepartment of Biology\n458 Life Sciences Complex\nSyracuse University\nSyracuse, NY 13244',
+  mapEmbed: null,
+  social: {
+    twitter: null,
+    github: null,
+    linkedin: null,
+    bluesky: null,
+    mastodon: null,
+  },
+}
+
 /* ───── Config ───── */
 
 export default buildConfig({
@@ -330,6 +592,7 @@ export default buildConfig({
   },
   routes: { admin: '/admin', api: '/api' },
   onInit: async (payload) => {
+    /* Roles */
     const existingRoles = await payload.count({ collection: 'roles' })
     if (existingRoles.totalDocs === 0) {
       for (const role of seedRoles) {
@@ -338,12 +601,98 @@ export default buildConfig({
       payload.logger.info(`Seeded ${seedRoles.length} roles`)
     }
 
+    /* Tags */
     const existingTags = await payload.count({ collection: 'tags' })
     if (existingTags.totalDocs === 0) {
       for (const tag of seedTags) {
         await payload.create({ collection: 'tags', data: tag })
       }
       payload.logger.info(`Seeded ${seedTags.length} tags`)
+    }
+
+    /* Helper: look up role id by label */
+    const roleIdByLabel = new Map<string, string | number>()
+    const roleDocs = await payload.find({ collection: 'roles', limit: 50 })
+    for (const r of roleDocs.docs as Array<{ id: string | number; label: string }>) {
+      roleIdByLabel.set(r.label, r.id)
+    }
+
+    /* Helper: look up tag id by label */
+    const tagIdByLabel = new Map<string, string | number>()
+    const tagDocs = await payload.find({ collection: 'tags', limit: 50 })
+    for (const t of tagDocs.docs as Array<{ id: string | number; label: string }>) {
+      tagIdByLabel.set(t.label, t.id)
+    }
+
+    /* Members */
+    const existingMembers = await payload.count({ collection: 'members' })
+    if (existingMembers.totalDocs === 0) {
+      for (const m of seedMembers) {
+        const { roleLabel, ...rest } = m
+        const role = roleLabel ? roleIdByLabel.get(roleLabel) : undefined
+        await payload.create({
+          collection: 'members',
+          data: {
+            ...rest,
+            ...(role ? { role } : {}),
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          } as any,
+        })
+      }
+      payload.logger.info(`Seeded ${seedMembers.length} members`)
+    }
+
+    /* Research Areas */
+    const existingAreas = await payload.count({ collection: 'research-areas' })
+    if (existingAreas.totalDocs === 0) {
+      for (const area of seedResearchAreas) {
+        await payload.create({
+          collection: 'research-areas',
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          data: area as any,
+        })
+      }
+      payload.logger.info(`Seeded ${seedResearchAreas.length} research areas`)
+    }
+
+    /* Posts */
+    const existingPosts = await payload.count({ collection: 'posts' })
+    if (existingPosts.totalDocs === 0) {
+      for (const post of seedPosts) {
+        const { tagLabel, ...rest } = post
+        const tag = tagLabel ? tagIdByLabel.get(tagLabel) : undefined
+        await payload.create({
+          collection: 'posts',
+          data: {
+            ...rest,
+            ...(tag ? { tag } : {}),
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          } as any,
+        })
+      }
+      payload.logger.info(`Seeded ${seedPosts.length} posts`)
+    }
+
+    /* Globals — only seed if tagline/mission/email are empty (never overwrite edits) */
+    const home = await payload.findGlobal({ slug: 'home' })
+    if (!home.tagline) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      await payload.updateGlobal({ slug: 'home', data: seedHome as any })
+      payload.logger.info('Seeded home global')
+    }
+
+    const about = await payload.findGlobal({ slug: 'about' })
+    if (!about.mission) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      await payload.updateGlobal({ slug: 'about', data: seedAbout as any })
+      payload.logger.info('Seeded about global')
+    }
+
+    const contact = await payload.findGlobal({ slug: 'contact' })
+    if (!contact.email) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      await payload.updateGlobal({ slug: 'contact', data: seedContact as any })
+      payload.logger.info('Seeded contact global')
     }
   },
 })
