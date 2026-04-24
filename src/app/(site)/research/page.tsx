@@ -44,12 +44,12 @@ export default async function ResearchPage() {
                 </h2>
 
                 {area.image && (
-                  /* eslint-disable-next-line @next/next/no-img-element */
-                  <figure className="my-10">
+                  <figure className="my-10 max-w-2xl">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={area.image}
                       alt=""
-                      className="w-full max-w-2xl"
+                      className="w-full aspect-[4/3] object-cover rounded-md"
                     />
                   </figure>
                 )}
