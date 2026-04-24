@@ -23,12 +23,28 @@ export default function SiteLayout({
               Raina Lab
             </span>
           </Link>
-          <nav aria-label="Primary" className="hidden md:block">
-            <Nav />
-          </nav>
+          <div className="hidden md:flex items-center gap-8">
+            <nav aria-label="Primary">
+              <Nav />
+            </nav>
+            <Link
+              href="/keystatic"
+              className="label-strong border border-[color:var(--color-line)] hover:border-[color:var(--color-ink)] hover:text-[color:var(--color-ink)] text-[color:var(--color-ink-3)] px-3 py-1.5 rounded-full transition-colors"
+            >
+              Admin
+            </Link>
+          </div>
         </div>
-        <div className="md:hidden border-t border-[color:var(--color-line)] px-5 py-3 overflow-x-auto">
-          <Nav />
+        <div className="md:hidden border-t border-[color:var(--color-line)] px-5 py-3 flex items-center justify-between gap-4">
+          <div className="overflow-x-auto">
+            <Nav />
+          </div>
+          <Link
+            href="/keystatic"
+            className="label-strong border border-[color:var(--color-line)] hover:border-[color:var(--color-ink)] text-[color:var(--color-ink-3)] px-3 py-1.5 rounded-full shrink-0"
+          >
+            Admin
+          </Link>
         </div>
       </header>
 
@@ -59,7 +75,7 @@ export default function SiteLayout({
               href="/keystatic"
               className="hover:text-[color:var(--color-ink)] transition-colors"
             >
-              Edit
+              Admin
             </Link>
           </div>
         </div>
