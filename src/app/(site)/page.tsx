@@ -21,13 +21,13 @@ export default async function HomePage() {
   return (
     <div className="space-y-28 sm:space-y-36">
       {/* HERO — massive wordmark with animated emerald field */}
-      <section className="relative -mx-5 sm:-mx-8 lg:-mx-12 px-5 sm:px-8 lg:px-12 min-h-[82vh] flex flex-col justify-center pt-4 lg:pt-6 isolate">
+      <section className="relative -mx-5 sm:-mx-8 lg:-mx-12 px-5 sm:px-8 lg:px-12 min-h-[68vh] flex flex-col justify-center pt-4 lg:pt-6 isolate">
         <HeroField />
 
         <div className="relative z-10 max-w-[82rem] mx-auto w-full">
           <HeroTitle
             text="Raina Lab"
-            className="display-xl font-medium text-[clamp(5rem,22vw,20rem)] leading-[0.85] tracking-[-0.055em] text-balance"
+            className="display-xl font-medium text-[clamp(3.75rem,13vw,11rem)] leading-[0.9] tracking-[-0.045em] text-balance"
           />
 
           {home?.tagline && (
