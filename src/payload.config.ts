@@ -538,12 +538,21 @@ const seedPosts = [
 ]
 
 const seedHome = {
-  tagline: 'How plants sense the environment and defend themselves.',
+  tagline:
+    'Molecular genetics of plant immunity and stress response in Arabidopsis thaliana.',
   intro:
-    'The Raina Lab studies the molecular genetics of plant–pathogen interactions in Arabidopsis thaliana — receptor-like kinases, small RNAs, and the defence programmes they trigger.',
+    'The laboratory investigates the molecular mechanisms by which Arabidopsis thaliana perceives and responds to pathogens and environmental stress. Our research combines forward and reverse genetics with functional genomics to characterise receptor-like kinases, small-RNA pathways, and the gene regulatory networks underlying plant defence.',
   heroImage:
     'https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=2000&q=80&auto=format&fit=crop',
 }
+
+/* Previously-seeded home copy. If the live DB still matches these verbatim,
+   onInit will quietly swap in the new academic copy above. Any PI edit
+   already shipped means the fields won't match and nothing is overwritten. */
+const OLD_HOME_TAGLINE =
+  'How plants sense the environment and defend themselves.'
+const OLD_HOME_INTRO =
+  'The Raina Lab studies the molecular genetics of plant–pathogen interactions in Arabidopsis thaliana — receptor-like kinases, small RNAs, and the defence programmes they trigger.'
 
 const seedAbout = {
   mission:
@@ -740,12 +749,24 @@ export default buildConfig({
       payload.logger.info(`Seeded post ${rest.slug}`)
     }
 
-    /* Globals — only seed if empty (never overwrite edits) */
+    /* Globals — seed if empty; also replace prior seeded copy verbatim */
     const home = await payload.findGlobal({ slug: 'home' })
     if (!home.tagline) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       await payload.updateGlobal({ slug: 'home', data: seedHome as any })
       payload.logger.info('Seeded home global')
+    } else if (
+      home.tagline === OLD_HOME_TAGLINE ||
+      home.intro === OLD_HOME_INTRO
+    ) {
+      const patch: Record<string, string | null | undefined> = {}
+      if (home.tagline === OLD_HOME_TAGLINE) patch.tagline = seedHome.tagline
+      if (home.intro === OLD_HOME_INTRO) patch.intro = seedHome.intro
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      await payload.updateGlobal({ slug: 'home', data: patch as any })
+      payload.logger.info(
+        `Migrated home global copy (${Object.keys(patch).join(', ')}) to academic register`,
+      )
     }
     const about = await payload.findGlobal({ slug: 'about' })
     if (!about.mission) {
