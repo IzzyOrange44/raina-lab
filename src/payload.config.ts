@@ -14,6 +14,17 @@ const Users: CollectionConfig = {
   slug: 'users',
   admin: { useAsTitle: 'email', defaultColumns: ['name', 'email'] },
   auth: true,
+  access: {
+    /* Only signed-in users can create, read, update, or delete other users.
+       This disables public registration — new admins must be invited from
+       within the admin UI by someone already logged in. The first-time
+       "create first user" flow still runs when the table is empty. */
+    create: ({ req }) => !!req.user,
+    read: ({ req }) => !!req.user,
+    update: ({ req }) => !!req.user,
+    delete: ({ req }) => !!req.user,
+    admin: ({ req }) => !!req.user,
+  },
   fields: [{ name: 'name', type: 'text' }],
 }
 
