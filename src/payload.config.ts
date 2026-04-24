@@ -541,7 +541,7 @@ const seedHome = {
   tagline:
     'Genetic and molecular mechanisms of gene regulation and environmental response in Arabidopsis thaliana.',
   intro:
-    'The laboratory investigates how Arabidopsis thaliana regulates gene expression and responds to biotic and abiotic stress. Our work spans receptor-like kinase signalling, small-RNA pathways, and chromatin-level regulation by histone-modifying enzymes — combined through forward and reverse genetics, functional genomics, and molecular biology.',
+    'Our research focuses on the epigenetic and post-transcriptional mechanisms that regulate gene expression in plants — including DNA methylation, histone modification, and small-RNA pathways. Using Arabidopsis thaliana as a model, we investigate how these layers of control shape development and response to biotic and abiotic stress.',
   heroImage:
     'https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=2000&q=80&auto=format&fit=crop',
 }
@@ -556,6 +556,7 @@ const OLD_HOME_TAGLINES = [
 const OLD_HOME_INTROS = [
   'The Raina Lab studies the molecular genetics of plant–pathogen interactions in Arabidopsis thaliana — receptor-like kinases, small RNAs, and the defence programmes they trigger.',
   'The laboratory investigates the molecular mechanisms by which Arabidopsis thaliana perceives and responds to pathogens and environmental stress. Our research combines forward and reverse genetics with functional genomics to characterise receptor-like kinases, small-RNA pathways, and the gene regulatory networks underlying plant defence.',
+  'The laboratory investigates how Arabidopsis thaliana regulates gene expression and responds to biotic and abiotic stress. Our work spans receptor-like kinase signalling, small-RNA pathways, and chromatin-level regulation by histone-modifying enzymes — combined through forward and reverse genetics, functional genomics, and molecular biology.',
 ]
 
 const seedAbout = {
