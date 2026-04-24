@@ -1,15 +1,15 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { DocumentRenderer } from '@keystatic/core/renderer'
+import { RichText } from '@payloadcms/richtext-lexical/react'
 import { getMember, getRoleLabel } from '@/lib/reader'
 
 type Links = {
-  scholar: string | null
-  github: string | null
-  website: string | null
-  twitter: string | null
-  linkedin: string | null
-  orcid: string | null
+  scholar?: string | null
+  github?: string | null
+  website?: string | null
+  twitter?: string | null
+  linkedin?: string | null
+  orcid?: string | null
 }
 
 const SOCIAL_PLATFORMS: Array<{ key: keyof Links; label: string }> = [
@@ -31,8 +31,7 @@ export default async function MemberPage({
   if (!member) notFound()
 
   const roleLabel = await getRoleLabel(member.role)
-  const bio = await member.fullBio()
-  const links = member.links as Links
+  const links = (member.links ?? {}) as Links
   const visibleLinks = SOCIAL_PLATFORMS.filter((p) => links[p.key])
 
   return (
@@ -124,9 +123,11 @@ export default async function MemberPage({
         </aside>
 
         <div className="col-span-12 lg:col-span-9">
-          <div className="prose prose-sleek max-w-none">
-            <DocumentRenderer document={bio} />
-          </div>
+          {member.fullBio && (
+            <div className="prose prose-sleek max-w-none">
+              <RichText data={member.fullBio} />
+            </div>
+          )}
         </div>
       </div>
     </article>

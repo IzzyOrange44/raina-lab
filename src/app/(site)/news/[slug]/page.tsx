@@ -1,7 +1,18 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { DocumentRenderer } from '@keystatic/core/renderer'
+import { RichText } from '@payloadcms/richtext-lexical/react'
 import { getPost, getTag } from '@/lib/reader'
+
+function formatDate(iso?: string | null) {
+  if (!iso) return ''
+  const d = new Date(iso)
+  if (isNaN(d.getTime())) return ''
+  return d.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })
+}
 
 export default async function NewsPostPage({
   params,
@@ -13,7 +24,6 @@ export default async function NewsPostPage({
   if (!post) notFound()
 
   const tag = await getTag(post.tag)
-  const body = await post.body()
 
   return (
     <article className="max-w-[44rem] mx-auto">
@@ -27,7 +37,7 @@ export default async function NewsPostPage({
       <header className="mb-14 pb-10 border-b border-[color:var(--color-line)]">
         {(post.publishedDate || tag) && (
           <div className="flex items-center gap-4 label tabular mb-8">
-            {post.publishedDate && <time>{post.publishedDate}</time>}
+            {post.publishedDate && <time>{formatDate(post.publishedDate)}</time>}
             {post.publishedDate && tag && (
               <span className="h-1 w-1 rounded-full bg-[color:var(--color-ink-4)]" aria-hidden />
             )}
@@ -62,9 +72,11 @@ export default async function NewsPostPage({
         )}
       </header>
 
-      <div className="prose prose-sleek max-w-none">
-        <DocumentRenderer document={body} />
-      </div>
+      {post.body && (
+        <div className="prose prose-sleek max-w-none">
+          <RichText data={post.body} />
+        </div>
+      )}
     </article>
   )
 }

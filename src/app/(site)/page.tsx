@@ -17,7 +17,6 @@ export default async function HomePage() {
 
   return (
     <div className="space-y-28 sm:space-y-36">
-      {/* HERO */}
       <section className="relative min-h-[58vh] lg:min-h-[68vh] flex flex-col justify-center pt-4 lg:pt-8">
         <div className="flex items-center gap-3 mb-8 sm:mb-10 rise rise-1">
           <span
@@ -59,15 +58,12 @@ export default async function HomePage() {
         )}
       </section>
 
-      {/* RESEARCH */}
       {featured.length > 0 && (
         <section>
           <div className="flex items-baseline justify-between gap-4 mb-12 sm:mb-16 pb-5 border-b border-[color:var(--color-line)]">
-            <div className="flex items-center gap-4">
-              <span className="label-strong text-[color:var(--color-accent)]">
-                / Research
-              </span>
-            </div>
+            <span className="label-strong text-[color:var(--color-accent)]">
+              / Research
+            </span>
             <Link
               href="/research"
               className="label hover:text-[color:var(--color-ink)] transition-colors"
@@ -79,7 +75,7 @@ export default async function HomePage() {
           <div className="grid gap-10 sm:gap-14 lg:gap-16 md:grid-cols-2">
             {featured.map((r, i) => (
               <Link
-                key={r.slug}
+                key={r.id}
                 href={`/research#${r.slug}`}
                 className="group block"
               >
@@ -103,7 +99,6 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* NEWS */}
       {postsWithTags.length > 0 && (
         <section>
           <div className="flex items-baseline justify-between gap-4 mb-12 sm:mb-16 pb-5 border-b border-[color:var(--color-line)]">
@@ -120,14 +115,19 @@ export default async function HomePage() {
 
           <ul className="divide-y divide-[color:var(--color-line)]">
             {postsWithTags.map((p) => (
-              <li key={p.slug}>
+              <li key={p.id}>
                 <Link
                   href={`/news/${p.slug}`}
                   className="group grid grid-cols-12 gap-4 sm:gap-6 py-7 sm:py-8 -mx-3 sm:-mx-5 px-3 sm:px-5 hover:bg-[color:var(--color-surface)] transition-colors"
                 >
                   <div className="col-span-12 sm:col-span-3 lg:col-span-2 flex flex-col gap-1.5 pt-1">
                     {p.publishedDate && (
-                      <time className="label tabular">{p.publishedDate}</time>
+                      <time className="label tabular">
+                        {new Date(p.publishedDate).toLocaleDateString(
+                          'en-US',
+                          { year: 'numeric', month: 'short', day: 'numeric' },
+                        )}
+                      </time>
                     )}
                     {p.tagData && (
                       <span

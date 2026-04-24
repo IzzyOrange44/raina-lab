@@ -21,7 +21,7 @@ export default async function ResearchPage() {
         <div className="space-y-24 sm:space-y-32">
           {areas.map((area, i) => (
             <section
-              key={area.slug}
+              key={area.id}
               id={area.slug}
               className="scroll-mt-32 grid grid-cols-12 gap-6 lg:gap-12"
             >

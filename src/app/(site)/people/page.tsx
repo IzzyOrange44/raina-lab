@@ -27,7 +27,7 @@ export default async function PeoplePage() {
       ) : (
         <ul className="grid gap-x-6 gap-y-14 sm:gap-x-8 sm:gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
           {withRoles.map((m) => (
-            <li key={m.slug}>
+            <li key={m.id}>
               <Link href={`/people/${m.slug}`} className="group block">
                 <div className="relative aspect-[3/4] overflow-hidden bg-[color:var(--color-surface)] border border-[color:var(--color-line)] mb-5">
                   {m.photo ? (

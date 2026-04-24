@@ -1,92 +1,155 @@
-import { createReader } from '@keystatic/core/reader'
-import keystaticConfig from '../../keystatic.config'
+/* Data reader — wraps Payload's local API with simple helpers.
+   Pages are typed loosely here (`any`) until `payload generate:types` runs
+   after the DB is provisioned. */
+import { getPayload } from 'payload'
+import config from '@payload-config'
 
-export const reader = createReader(process.cwd(), keystaticConfig)
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
-export type MemberEntry = Awaited<
-  ReturnType<typeof reader.collections.members.read>
->
-export type ResearchAreaEntry = Awaited<
-  ReturnType<typeof reader.collections.researchAreas.read>
->
-export type PostEntry = Awaited<
-  ReturnType<typeof reader.collections.posts.read>
->
-
-export async function getMembers() {
-  const entries = await reader.collections.members.all()
-  return entries.map((e) => ({ slug: e.slug, ...e.entry }))
+async function payload() {
+  return getPayload({ config })
 }
 
-export async function getCurrentMembers() {
-  const all = await getMembers()
-  return all
-    .filter((m) => m.status.discriminant === 'current')
-    .sort((a, b) => (a.featured === b.featured ? 0 : a.featured ? -1 : 1))
+export async function getHome(): Promise<any> {
+  const p = await payload()
+  return p.findGlobal({ slug: 'home' as any })
 }
 
-export async function getAlumni() {
-  const all = await getMembers()
-  return all
-    .filter((m) => m.status.discriminant === 'alumni')
-    .sort((a, b) => {
-      const aEnd =
-        a.status.discriminant === 'alumni' ? a.status.value.endDate ?? '' : ''
-      const bEnd =
-        b.status.discriminant === 'alumni' ? b.status.value.endDate ?? '' : ''
-      return bEnd.localeCompare(aEnd)
-    })
+export async function getAbout(): Promise<any> {
+  const p = await payload()
+  return p.findGlobal({ slug: 'about' as any })
 }
 
-export async function getMember(slug: string) {
-  return reader.collections.members.read(slug)
+export async function getContact(): Promise<any> {
+  const p = await payload()
+  return p.findGlobal({ slug: 'contact' as any })
 }
 
-export async function getResearchAreas() {
-  const entries = await reader.collections.researchAreas.all()
-  return entries
-    .map((e) => ({ slug: e.slug, ...e.entry }))
-    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+export async function getCurrentMembers(): Promise<any[]> {
+  const p = await payload()
+  const { docs } = await p.find({
+    collection: 'members' as any,
+    where: { status: { equals: 'current' } },
+    limit: 200,
+    sort: ['-featured', 'name'] as any,
+  })
+  return docs
 }
 
-export async function getFeaturedResearchAreas() {
-  return (await getResearchAreas()).filter((r) => r.featured)
+export async function getAlumni(): Promise<any[]> {
+  const p = await payload()
+  const { docs } = await p.find({
+    collection: 'members' as any,
+    where: { status: { equals: 'alumni' } },
+    limit: 200,
+    sort: '-endDate',
+  })
+  return docs
 }
 
-export async function getPosts() {
-  const entries = await reader.collections.posts.all()
-  return entries
-    .map((e) => ({ slug: e.slug, ...e.entry }))
-    .filter((p) => !p.draft)
-    .sort((a, b) => (b.publishedDate ?? '').localeCompare(a.publishedDate ?? ''))
+export async function getMember(slug: string): Promise<any> {
+  const p = await payload()
+  const { docs } = await p.find({
+    collection: 'members' as any,
+    where: { slug: { equals: slug } },
+    limit: 1,
+  })
+  return docs[0] ?? null
 }
 
-export async function getLatestPosts(count = 3) {
-  return (await getPosts()).slice(0, count)
+export async function getResearchAreas(): Promise<any[]> {
+  const p = await payload()
+  const { docs } = await p.find({
+    collection: 'research-areas' as any,
+    limit: 100,
+    sort: 'order',
+  })
+  return docs
 }
 
-export async function getPost(slug: string) {
-  return reader.collections.posts.read(slug)
+export async function getFeaturedResearchAreas(): Promise<any[]> {
+  const p = await payload()
+  const { docs } = await p.find({
+    collection: 'research-areas' as any,
+    where: { featured: { equals: true } },
+    limit: 20,
+    sort: 'order',
+  })
+  return docs
 }
 
-export async function getRoleLabel(slug: string | null) {
-  if (!slug) return null
-  const role = await reader.collections.roles.read(slug)
-  return role?.label ?? slug
+export async function getPosts(): Promise<any[]> {
+  const p = await payload()
+  const { docs } = await p.find({
+    collection: 'posts' as any,
+    where: { draft: { not_equals: true } },
+    limit: 200,
+    sort: '-publishedDate',
+  })
+  return docs
 }
 
-export async function getTag(slug: string | null) {
-  if (!slug) return null
-  const tag = await reader.collections.tags.read(slug)
-  return tag ? { label: tag.label, color: tag.color } : null
+export async function getLatestPosts(limit = 4): Promise<any[]> {
+  const p = await payload()
+  const { docs } = await p.find({
+    collection: 'posts' as any,
+    where: { draft: { not_equals: true } },
+    limit,
+    sort: '-publishedDate',
+  })
+  return docs
 }
 
-export async function getHome() {
-  return reader.singletons.home.read()
+export async function getPost(slug: string): Promise<any> {
+  const p = await payload()
+  const { docs } = await p.find({
+    collection: 'posts' as any,
+    where: { slug: { equals: slug } },
+    limit: 1,
+  })
+  return docs[0] ?? null
 }
-export async function getAbout() {
-  return reader.singletons.about.read()
+
+export async function getRoleLabel(role: unknown): Promise<string | null> {
+  if (!role) return null
+  if (typeof role === 'object' && role !== null && 'label' in role) {
+    return (role as { label?: string }).label ?? null
+  }
+  if (typeof role === 'string' || typeof role === 'number') {
+    const p = await payload()
+    try {
+      const doc: any = await p.findByID({
+        collection: 'roles' as any,
+        id: role,
+      })
+      return doc?.label ?? null
+    } catch {
+      return null
+    }
+  }
+  return null
 }
-export async function getContact() {
-  return reader.singletons.contact.read()
+
+export async function getTag(
+  tag: unknown,
+): Promise<{ label: string; color: string | null } | null> {
+  if (!tag) return null
+  if (typeof tag === 'object' && tag !== null && 'label' in tag) {
+    const t = tag as { label?: string; color?: string | null }
+    return { label: t.label ?? '', color: t.color ?? null }
+  }
+  if (typeof tag === 'string' || typeof tag === 'number') {
+    const p = await payload()
+    try {
+      const doc: any = await p.findByID({
+        collection: 'tags' as any,
+        id: tag,
+      })
+      if (!doc) return null
+      return { label: doc.label ?? '', color: doc.color ?? null }
+    } catch {
+      return null
+    }
+  }
+  return null
 }

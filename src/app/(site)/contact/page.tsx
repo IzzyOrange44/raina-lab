@@ -23,7 +23,7 @@ export default async function ContactPage() {
     )
   }
 
-  const social = contact.social as Record<SocialKey, string | null>
+  const social = (contact.social ?? {}) as Record<SocialKey, string | null | undefined>
   const visibleSocial = (Object.keys(SOCIAL_LABELS) as SocialKey[])
     .filter((key) => social[key])
     .map((key) => ({ key, label: SOCIAL_LABELS[key], url: social[key]! }))

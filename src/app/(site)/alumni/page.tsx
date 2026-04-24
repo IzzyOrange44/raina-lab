@@ -3,6 +3,12 @@ import Masthead from '@/components/Masthead'
 
 export const metadata = { title: 'Alumni' }
 
+function formatYear(iso?: string | null) {
+  if (!iso) return ''
+  const d = new Date(iso)
+  return isNaN(d.getTime()) ? '' : String(d.getFullYear())
+}
+
 export default async function AlumniPage() {
   const alumni = await getAlumni()
   const withRoles = await Promise.all(
@@ -25,37 +31,33 @@ export default async function AlumniPage() {
         </div>
       ) : (
         <ul className="divide-y divide-[color:var(--color-line)]">
-          {withRoles.map((m) => {
-            const alumniInfo =
-              m.status.discriminant === 'alumni' ? m.status.value : null
-            return (
-              <li
-                key={m.slug}
-                className="grid grid-cols-12 gap-3 sm:gap-6 py-7 sm:py-8 items-baseline"
-              >
-                <div className="col-span-12 sm:col-span-2 label tabular">
-                  {alumniInfo?.endDate ?? ''}
-                </div>
-                <div className="col-span-12 sm:col-span-5 lg:col-span-6">
-                  <h3 className="display-md text-xl sm:text-2xl text-[color:var(--color-ink)] leading-tight">
-                    {m.name}
-                  </h3>
-                  {m.roleLabel && (
-                    <p className="label text-[color:var(--color-accent)] mt-1.5">
-                      {m.roleLabel}
-                    </p>
-                  )}
-                </div>
-                <div className="col-span-12 sm:col-span-5 lg:col-span-4">
-                  {alumniInfo?.currentPosition && (
-                    <p className="text-[color:var(--color-ink-2)] leading-snug">
-                      {alumniInfo.currentPosition}
-                    </p>
-                  )}
-                </div>
-              </li>
-            )
-          })}
+          {withRoles.map((m) => (
+            <li
+              key={m.id}
+              className="grid grid-cols-12 gap-3 sm:gap-6 py-7 sm:py-8 items-baseline"
+            >
+              <div className="col-span-12 sm:col-span-2 label tabular">
+                {formatYear(m.endDate)}
+              </div>
+              <div className="col-span-12 sm:col-span-5 lg:col-span-6">
+                <h3 className="display-md text-xl sm:text-2xl text-[color:var(--color-ink)] leading-tight">
+                  {m.name}
+                </h3>
+                {m.roleLabel && (
+                  <p className="label text-[color:var(--color-accent)] mt-1.5">
+                    {m.roleLabel}
+                  </p>
+                )}
+              </div>
+              <div className="col-span-12 sm:col-span-5 lg:col-span-4">
+                {m.currentPosition && (
+                  <p className="text-[color:var(--color-ink-2)] leading-snug">
+                    {m.currentPosition}
+                  </p>
+                )}
+              </div>
+            </li>
+          ))}
         </ul>
       )}
     </article>

@@ -4,6 +4,17 @@ import Masthead from '@/components/Masthead'
 
 export const metadata = { title: 'News' }
 
+function formatDate(iso?: string | null) {
+  if (!iso) return ''
+  const d = new Date(iso)
+  if (isNaN(d.getTime())) return ''
+  return d.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  })
+}
+
 export default async function NewsPage() {
   const posts = await getPosts()
   const withTags = await Promise.all(
@@ -24,14 +35,16 @@ export default async function NewsPage() {
       ) : (
         <ul className="divide-y divide-[color:var(--color-line)]">
           {withTags.map((p) => (
-            <li key={p.slug}>
+            <li key={p.id}>
               <Link
                 href={`/news/${p.slug}`}
                 className="group grid grid-cols-12 gap-3 sm:gap-6 py-8 sm:py-10 -mx-3 sm:-mx-5 px-3 sm:px-5 hover:bg-[color:var(--color-surface)] transition-colors"
               >
                 <div className="col-span-12 sm:col-span-3 lg:col-span-2 flex flex-col gap-1.5 pt-1">
                   {p.publishedDate && (
-                    <time className="label tabular">{p.publishedDate}</time>
+                    <time className="label tabular">
+                      {formatDate(p.publishedDate)}
+                    </time>
                   )}
                   {p.tagData && (
                     <span
