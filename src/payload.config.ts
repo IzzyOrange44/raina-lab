@@ -415,6 +415,7 @@ const seedMembers = [
     shortBio:
       'Biochemistry and Forensic Science major, Psychology minor. Graduating 2026 and applying to medical school.',
     status: 'current' as const,
+    photo: '/images/members/taylor-stubitsch.jpg',
   },
   {
     name: 'Katie Bakley',
@@ -424,6 +425,7 @@ const seedMembers = [
     shortBio:
       '4+1 Biotechnology program: BS 2026, MS 2027. Honors thesis on JMJ1 and JMJ2 in Arabidopsis defence and development.',
     status: 'current' as const,
+    photo: '/images/members/katie-bakley.jpg',
     fullBio: lexical([
       'Katie is a junior enrolled in the 4+1 Biotechnology program. She will earn her BS in Biotechnology in December 2026, followed by her MS in December 2027. After graduation, she hopes to pursue a career in the biotechnology industry.',
       'Outside of the Raina Lab, Katie has worked as a Student Research Associate at Drexel University and will be joining DSM-Firmenich as a Quality Control Intern in Summer 2026. She is a member of the Renée Crown University Honors Program, and her thesis work focuses on the role of JMJ1 and JMJ2 in defence and development in Arabidopsis.',
@@ -437,6 +439,7 @@ const seedMembers = [
     shortBio:
       'Researching JMJ21 and its role in abiotic and biotic stress responses in Arabidopsis thaliana.',
     status: 'current' as const,
+    photo: '/images/members/taryn-keefe.jpg',
     fullBio: lexical([
       'Taryn is researching JMJ21 and its role in abiotic and biotic stress responses in Arabidopsis thaliana.',
       'On campus, she serves in leadership roles across the Biotechnology Society, Campus Cursive, and the MaryAnn Shaw Center, and acts as a student ambassador for SOURCE and the College of Arts and Sciences. She is also a member of Omega Alpha Tau (Biotechnology Fraternity) and Pi Mu Epsilon (Math Honors Society).',
@@ -451,6 +454,7 @@ const seedMembers = [
     shortBio:
       'Senior, BS Biotechnology with a minor in Chemistry. Honors thesis on the JMJ27 protein in Arabidopsis thaliana.',
     status: 'current' as const,
+    photo: '/images/members/sevara-abduvalieva.jpg',
     fullBio: lexical([
       'Sevara Abduvalieva is a senior at Syracuse University, graduating in 2026 with a B.S. in Biotechnology and a minor in Chemistry. She is a member of the Renée Crown University Honors Program and plans to pursue medical school following graduation.',
       'Her honors thesis focuses on the characterisation of the JMJ27 protein in Arabidopsis thaliana.',
@@ -670,7 +674,7 @@ export default buildConfig({
       payload.logger.info(`Removed ${oldPosts.docs.length} old real-paper seeds`)
     }
 
-    /* Upsert members by slug (create if missing, skip if exists) */
+    /* Upsert members by slug (create if missing; patch photo if empty) */
     for (const m of seedMembers) {
       const { roleLabel, ...rest } = m
       const existing = await payload.find({
@@ -678,7 +682,18 @@ export default buildConfig({
         where: { slug: { equals: rest.slug } },
         limit: 1,
       })
-      if (existing.docs.length) continue
+      if (existing.docs.length) {
+        const doc = existing.docs[0] as { id: string | number; photo?: string | null }
+        if (rest.photo && !doc.photo) {
+          await payload.update({
+            collection: 'members',
+            id: doc.id,
+            data: { photo: rest.photo },
+          })
+          payload.logger.info(`Patched photo for ${rest.slug}`)
+        }
+        continue
+      }
       const role = roleLabel ? roleIdByLabel.get(roleLabel) : undefined
       await payload.create({
         collection: 'members',
