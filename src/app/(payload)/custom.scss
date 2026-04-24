@@ -1,1 +1,113 @@
-/* Custom Payload admin styles — reserved for tweaks. */
+/* Rebrand the Payload admin to match the public site:
+   Geist fonts, canvas-cream background, forest-ink text, emerald accent. */
+
+:root,
+html[data-theme='light'] {
+  /* Backgrounds & surfaces */
+  --theme-bg: #fafafa;
+  --theme-elevation-0: #ffffff;
+  --theme-elevation-50: #fafafa;
+  --theme-elevation-100: #f5f5f5;
+  --theme-elevation-150: #efefef;
+  --theme-elevation-200: #e5e5e5;
+  --theme-elevation-250: #d4d4d4;
+  --theme-elevation-300: #a3a3a3;
+  --theme-elevation-400: #737373;
+  --theme-elevation-500: #525252;
+  --theme-elevation-600: #404040;
+  --theme-elevation-700: #262626;
+  --theme-elevation-800: #171717;
+  --theme-elevation-900: #0a0a0a;
+  --theme-elevation-1000: #000000;
+
+  /* Text */
+  --theme-text: #0a0a0a;
+  --theme-input-bg: #ffffff;
+
+  /* Primary accent — Payload uses "success" palette for primary buttons */
+  --theme-success-50: #ecfdf5;
+  --theme-success-100: #d1fae5;
+  --theme-success-150: #a7f3d0;
+  --theme-success-200: #6ee7b7;
+  --theme-success-300: #34d399;
+  --theme-success-400: #10b981;
+  --theme-success-500: #059669;
+  --theme-success-600: #047857;
+  --theme-success-700: #065f46;
+  --theme-success-800: #064e3b;
+  --theme-success-900: #022c22;
+
+  --color-success-50: #ecfdf5;
+  --color-success-100: #d1fae5;
+  --color-success-500: #059669;
+  --color-success-600: #047857;
+  --color-success-700: #065f46;
+
+  /* Fonts — pulled in via next/font on the (payload) layout */
+  --font-body:
+    var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono:
+    var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, monospace;
+}
+
+/* Apply Geist everywhere in the admin */
+body,
+.payload__root,
+.payload__app {
+  font-family:
+    var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  background: var(--theme-bg);
+  color: var(--theme-text);
+}
+
+/* Login/create-first-user shell — make the card feel like our site */
+.login,
+.create-first-user {
+  background: var(--theme-bg);
+}
+
+/* Tighten the login card's type to match the site voice */
+.login h1,
+.create-first-user h1 {
+  font-family:
+    var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: -0.02em;
+  font-weight: 500;
+}
+
+/* Primary buttons use the emerald instead of Payload's default blue */
+.btn--style-primary,
+.btn--style-pill,
+button[type='submit'].btn {
+  background: #059669;
+  border-color: #059669;
+}
+.btn--style-primary:hover,
+.btn--style-pill:hover,
+button[type='submit'].btn:hover {
+  background: #047857;
+  border-color: #047857;
+}
+
+/* Nav-active + link colours */
+a,
+.nav__link--active {
+  color: #047857;
+}
+
+/* Subtle rounded inputs */
+.field-type input,
+.field-type textarea,
+.field-type select {
+  border-radius: 6px;
+}
+
+/* Smoother transitions */
+.btn,
+a {
+  transition:
+    background-color 200ms ease,
+    color 200ms ease,
+    border-color 200ms ease;
+}

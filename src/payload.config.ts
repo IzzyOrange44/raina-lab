@@ -590,7 +590,19 @@ export default buildConfig({
   admin: {
     user: Users.slug,
     importMap: { baseDir: path.resolve(dirname) },
-    meta: { titleSuffix: ' · Raina Lab' },
+    meta: {
+      titleSuffix: ' · Raina Lab',
+      title: 'Raina Lab — Edit',
+      description: 'Edit content for the Raina Lab website.',
+      icons: [{ url: '/icon.svg', type: 'image/svg+xml' }],
+    },
+    theme: 'light',
+    components: {
+      graphics: {
+        Logo: '@/admin/components/Logo#default',
+        Icon: '@/admin/components/Icon#default',
+      },
+    },
   },
   collections: [Users, Members, Roles, Tags, ResearchAreas, Posts],
   globals: [Home, About, Contact],
