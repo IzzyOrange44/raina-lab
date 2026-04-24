@@ -407,127 +407,79 @@ const seedMembers = [
       'Ramesh Raina is Professor in the Department of Biology at Syracuse University. His lab studies the molecular basis of plant–pathogen interactions, functional genomics of receptor-like kinases in Arabidopsis, and plant responses to abiotic stresses.',
     ]),
   },
+  /* Placeholder alumni — clearly fake, replace via the admin. */
   {
-    name: 'Pratibha Choudhury',
-    slug: 'pratibha-choudhury',
+    name: 'A. Former Researcher',
+    slug: 'placeholder-alumni-1',
+    roleLabel: 'PhD Student',
+    featured: false,
+    status: 'alumni' as const,
+    endDate: '2022-05-15',
+    currentPosition: 'Postdoctoral fellow — placeholder.',
+  },
+  {
+    name: 'B. Former Researcher',
+    slug: 'placeholder-alumni-2',
     roleLabel: 'Postdoc',
     featured: false,
-    shortBio: 'Postdoctoral Associate.',
-    status: 'current' as const,
+    status: 'alumni' as const,
+    endDate: '2021-08-01',
+    currentPosition: 'Research scientist — placeholder.',
   },
   {
-    name: 'Nikhilesh Dhar',
-    slug: 'nikhilesh-dhar',
-    roleLabel: 'Postdoc',
-    featured: false,
-    shortBio: 'Postdoctoral researcher.',
-    status: 'current' as const,
-  },
-  {
-    name: 'Dan Li',
-    slug: 'dan-li',
-    roleLabel: 'PhD Student',
-    featured: false,
-    status: 'current' as const,
-  },
-  {
-    name: 'Irmak Erdem',
-    slug: 'irmak-erdem',
-    roleLabel: 'PhD Student',
-    featured: false,
-    status: 'current' as const,
-  },
-  {
-    name: 'Snigdha Chatterjee',
-    slug: 'snigdha-chatterjee',
+    name: 'C. Former Researcher',
+    slug: 'placeholder-alumni-3',
     roleLabel: 'Undergraduate',
     featured: false,
-    shortBio: 'BS Biotechnology.',
-    status: 'current' as const,
-  },
-  {
-    name: 'Nelson Trusler',
-    slug: 'nelson-trusler',
-    roleLabel: 'Undergraduate',
-    featured: false,
-    shortBio: 'BS Biology.',
-    status: 'current' as const,
-  },
-  {
-    name: 'Pallavi Gupta',
-    slug: 'pallavi-gupta',
-    roleLabel: 'PhD Student',
-    featured: false,
     status: 'alumni' as const,
-    endDate: '2013-05-15',
-    currentPosition: 'Research scientist in industry.',
-  },
-  {
-    name: 'Julie Caruana',
-    slug: 'julie-caruana',
-    roleLabel: 'PhD Student',
-    featured: false,
-    status: 'alumni' as const,
-    endDate: '2012-05-15',
-    currentPosition: 'Academic researcher.',
-  },
-  {
-    name: 'Aditya Dutta',
-    slug: 'aditya-dutta',
-    roleLabel: 'PhD Student',
-    featured: false,
-    status: 'alumni' as const,
-    endDate: '2011-05-15',
-    currentPosition: 'Industry scientist.',
+    endDate: '2020-05-15',
+    currentPosition: 'Graduate student — placeholder.',
   },
 ]
 
 const seedPosts = [
   {
-    title: 'miR167 controls salicylic-acid-dependent defence in Arabidopsis',
-    slug: 'mir167-salicylic-acid-defence',
-    publishedDate: '2020-09-15',
+    title: 'Example paper — replace from the admin',
+    slug: 'placeholder-post-paper',
+    publishedDate: '2025-09-15',
     tagLabel: 'Paper',
     excerpt:
-      'Our Plant Direct paper shows that overexpression of Arabidopsis miR167 induces salicylic-acid-dependent defence against Pseudomonas syringae through its targets ARF6 and ARF8.',
-    coverImage:
-      'https://images.unsplash.com/photo-1530026186672-2cd00ffc50fe?w=1600&q=80&auto=format&fit=crop',
+      'Placeholder entry for a recent publication from the lab. Edit or delete this from the admin to add a real post.',
     body: lexical([
-      'In Plant Direct, Caruana et al. demonstrate that the plant microRNA miR167 regulates resistance to the bacterial pathogen Pseudomonas syringae. Overexpression of miR167 reduces ARF6 and ARF8 transcripts and induces a salicylic-acid-dependent defence programme.',
-      'The finding links the post-transcriptional machinery of plants to their innate immune system and highlights microRNAs as integrators of developmental and defence signalling.',
+      'This is placeholder text for a news post. You can change the title, date, tag, excerpt, and body from the admin.',
     ]),
   },
   {
-    title: 'SDA1 modulates pathogen defence and oxidative-stress tolerance',
-    slug: 'sda1-defence-oxidative-stress',
-    publishedDate: '2020-06-01',
-    tagLabel: 'Paper',
+    title: 'Example award — replace from the admin',
+    slug: 'placeholder-post-award',
+    publishedDate: '2025-07-01',
+    tagLabel: 'Award',
     excerpt:
-      'Characterisation of SMALL DEFENSE-ASSOCIATED PROTEIN 1 as a regulator of bacterial defence and reactive-oxygen-species tolerance in Arabidopsis.',
+      'Placeholder entry for a lab member award or recognition. Edit or delete this from the admin.',
     body: lexical([
-      'sda1 loss-of-function mutants are compromised in defence gene expression and salicylic acid accumulation after Pseudomonas syringae infection, while also showing reduced tolerance to oxidative stress.',
+      'Placeholder text for an award announcement. Use the admin to replace with real content.',
     ]),
   },
   {
-    title: 'HRL1 codes for AtPPT1 and regulates ROS accumulation',
-    slug: 'hrl1-atppt1-ros',
-    publishedDate: '2015-03-11',
-    tagLabel: 'Paper',
+    title: 'Example talk — replace from the admin',
+    slug: 'placeholder-post-talk',
+    publishedDate: '2025-04-10',
+    tagLabel: 'Talk',
     excerpt:
-      'The spontaneous-lesion mutant hrl1 is allelic to AtPPT1, linking phosphoenolpyruvate/phosphate translocator activity to reactive-oxygen-species homeostasis and defence.',
+      'Placeholder entry for a talk, seminar, or conference presentation.',
     body: lexical([
-      'Our Frontiers in Plant Science paper maps the classic hrl1 mutation to AtPPT1, a plastidic phosphoenolpyruvate/phosphate translocator, establishing a connection between primary metabolism and defence gene activation.',
+      'Placeholder text for a talk or seminar announcement.',
     ]),
   },
   {
-    title: 'New graduate students welcomed to the lab',
-    slug: 'new-graduate-students-welcome',
-    publishedDate: '2024-09-01',
+    title: 'New lab member — replace from the admin',
+    slug: 'placeholder-post-member',
+    publishedDate: '2025-01-15',
     tagLabel: 'New Member',
     excerpt:
-      'The Raina Lab welcomes its incoming graduate cohort and a new round of undergraduate researchers for the academic year.',
+      'Placeholder entry for welcoming a new member to the lab.',
     body: lexical([
-      'The lab is excited to introduce the newest members joining our Arabidopsis research programme. We look forward to their contributions to our work on plant defence and receptor-like kinase signalling.',
+      'Placeholder text for a new-member announcement.',
     ]),
   },
 ]
@@ -610,36 +562,84 @@ export default buildConfig({
       payload.logger.info(`Seeded ${seedTags.length} tags`)
     }
 
-    /* Helper: look up role id by label */
+    /* Helper: look up role / tag id by label */
     const roleIdByLabel = new Map<string, string | number>()
-    const roleDocs = await payload.find({ collection: 'roles', limit: 50 })
-    for (const r of roleDocs.docs as Array<{ id: string | number; label: string }>) {
+    for (const r of (
+      await payload.find({ collection: 'roles', limit: 50 })
+    ).docs as Array<{ id: string | number; label: string }>) {
       roleIdByLabel.set(r.label, r.id)
     }
-
-    /* Helper: look up tag id by label */
     const tagIdByLabel = new Map<string, string | number>()
-    const tagDocs = await payload.find({ collection: 'tags', limit: 50 })
-    for (const t of tagDocs.docs as Array<{ id: string | number; label: string }>) {
+    for (const t of (
+      await payload.find({ collection: 'tags', limit: 50 })
+    ).docs as Array<{ id: string | number; label: string }>) {
       tagIdByLabel.set(t.label, t.id)
     }
 
-    /* Members */
-    const existingMembers = await payload.count({ collection: 'members' })
-    if (existingMembers.totalDocs === 0) {
-      for (const m of seedMembers) {
-        const { roleLabel, ...rest } = m
-        const role = roleLabel ? roleIdByLabel.get(roleLabel) : undefined
-        await payload.create({
-          collection: 'members',
-          data: {
-            ...rest,
-            ...(role ? { role } : {}),
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          } as any,
-        })
-      }
-      payload.logger.info(`Seeded ${seedMembers.length} members`)
+    /* One-time cleanup of old real-people/real-paper seeds. Safe to run
+       repeatedly — only deletes records with these specific slugs. */
+    const oldMemberSlugs = [
+      'pratibha-choudhury',
+      'nikhilesh-dhar',
+      'dan-li',
+      'irmak-erdem',
+      'snigdha-chatterjee',
+      'nelson-trusler',
+      'pallavi-gupta',
+      'julie-caruana',
+      'aditya-dutta',
+    ]
+    const oldMembers = await payload.find({
+      collection: 'members',
+      where: { slug: { in: oldMemberSlugs } },
+      limit: 50,
+    })
+    for (const m of oldMembers.docs as Array<{ id: string | number }>) {
+      await payload.delete({ collection: 'members', id: m.id })
+    }
+    if (oldMembers.docs.length) {
+      payload.logger.info(
+        `Removed ${oldMembers.docs.length} old real-people seeds`,
+      )
+    }
+
+    const oldPostSlugs = [
+      'mir167-salicylic-acid-defence',
+      'sda1-defence-oxidative-stress',
+      'hrl1-atppt1-ros',
+      'new-graduate-students-welcome',
+    ]
+    const oldPosts = await payload.find({
+      collection: 'posts',
+      where: { slug: { in: oldPostSlugs } },
+      limit: 50,
+    })
+    for (const p of oldPosts.docs as Array<{ id: string | number }>) {
+      await payload.delete({ collection: 'posts', id: p.id })
+    }
+    if (oldPosts.docs.length) {
+      payload.logger.info(`Removed ${oldPosts.docs.length} old real-paper seeds`)
+    }
+
+    /* Upsert members by slug (create if missing, skip if exists) */
+    for (const m of seedMembers) {
+      const { roleLabel, ...rest } = m
+      const existing = await payload.find({
+        collection: 'members',
+        where: { slug: { equals: rest.slug } },
+        limit: 1,
+      })
+      if (existing.docs.length) continue
+      const role = roleLabel ? roleIdByLabel.get(roleLabel) : undefined
+      await payload.create({
+        collection: 'members',
+        data: {
+          ...rest,
+          ...(role ? { role } : {}),
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } as any,
+      })
+      payload.logger.info(`Seeded member ${rest.slug}`)
     }
 
     /* Research Areas */
@@ -655,39 +655,40 @@ export default buildConfig({
       payload.logger.info(`Seeded ${seedResearchAreas.length} research areas`)
     }
 
-    /* Posts */
-    const existingPosts = await payload.count({ collection: 'posts' })
-    if (existingPosts.totalDocs === 0) {
-      for (const post of seedPosts) {
-        const { tagLabel, ...rest } = post
-        const tag = tagLabel ? tagIdByLabel.get(tagLabel) : undefined
-        await payload.create({
-          collection: 'posts',
-          data: {
-            ...rest,
-            ...(tag ? { tag } : {}),
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          } as any,
-        })
-      }
-      payload.logger.info(`Seeded ${seedPosts.length} posts`)
+    /* Upsert posts by slug */
+    for (const post of seedPosts) {
+      const { tagLabel, ...rest } = post
+      const existing = await payload.find({
+        collection: 'posts',
+        where: { slug: { equals: rest.slug } },
+        limit: 1,
+      })
+      if (existing.docs.length) continue
+      const tag = tagLabel ? tagIdByLabel.get(tagLabel) : undefined
+      await payload.create({
+        collection: 'posts',
+        data: {
+          ...rest,
+          ...(tag ? { tag } : {}),
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } as any,
+      })
+      payload.logger.info(`Seeded post ${rest.slug}`)
     }
 
-    /* Globals — only seed if tagline/mission/email are empty (never overwrite edits) */
+    /* Globals — only seed if empty (never overwrite edits) */
     const home = await payload.findGlobal({ slug: 'home' })
     if (!home.tagline) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       await payload.updateGlobal({ slug: 'home', data: seedHome as any })
       payload.logger.info('Seeded home global')
     }
-
     const about = await payload.findGlobal({ slug: 'about' })
     if (!about.mission) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       await payload.updateGlobal({ slug: 'about', data: seedAbout as any })
       payload.logger.info('Seeded about global')
     }
-
     const contact = await payload.findGlobal({ slug: 'contact' })
     if (!contact.email) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
