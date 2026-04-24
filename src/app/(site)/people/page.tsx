@@ -30,7 +30,11 @@ export default async function PeoplePage() {
           {withRoles.map((m, i) => (
             <Reveal as="li" key={m.id} delay={i * 0.06}>
               <Link href={`/people/${m.slug}`} className="group block">
-                <div className="relative aspect-[3/4] overflow-hidden bg-[color:var(--color-surface)] border border-[color:var(--color-line)] mb-5">
+                <div
+                  className={`relative overflow-hidden bg-[color:var(--color-surface)] border border-[color:var(--color-line)] mb-5 ${
+                    m.photo ? 'aspect-[3/4]' : 'aspect-[4/3] sm:aspect-[3/4]'
+                  }`}
+                >
                   {m.photo ? (
                     /* eslint-disable-next-line @next/next/no-img-element */
                     <img

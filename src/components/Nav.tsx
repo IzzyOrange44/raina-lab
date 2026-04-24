@@ -16,7 +16,7 @@ export default function Nav() {
   const pathname = usePathname()
 
   return (
-    <ul className="flex flex-wrap items-center gap-x-7 gap-y-2 text-sm tracking-tight">
+    <ul className="flex md:flex-wrap items-center gap-x-5 md:gap-x-7 gap-y-2 text-sm tracking-tight whitespace-nowrap">
       {links.map((l) => {
         const active =
           pathname === l.href ||

@@ -65,9 +65,11 @@ export default function SiteLayout({
                 </Link>
               </div>
             </div>
-            <div className="md:hidden border-t border-[color:var(--color-line)] px-5 py-3 flex items-center justify-between gap-4">
-              <div className="overflow-x-auto">
-                <Nav />
+            <div className="md:hidden border-t border-[color:var(--color-line)] px-5 py-2.5 flex items-center justify-between gap-3">
+              <div className="overflow-x-auto -mx-1 px-1 scrollbar-none">
+                <div className="flex">
+                  <Nav />
+                </div>
               </div>
               <Link
                 href="/admin"
